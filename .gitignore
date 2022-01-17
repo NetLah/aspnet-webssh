@@ -1,0 +1,11 @@
+## Ignore for continuous deployment
+
+# Custom ignore
+_*.bat
+_*.cmd
+_*.sh
+_*.ps1
+*.pem
+*.pfx
+*.cer
+*.crt
