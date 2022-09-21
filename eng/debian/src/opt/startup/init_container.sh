@@ -5,8 +5,7 @@ cat >/etc/motd <<EOL
   / _ \\__ \  _/| .' | _|  | |   | (__/ _ \ '_/ -_)
  /_/ \_\___/_|(_)_|\_|___| |_|    \___\___/_| \___|
 
-ASP.NET Core
-
+ASP.NET Core v${ASPNET_VERSION}
 EOL
 cat /etc/motd
 
@@ -14,4 +13,4 @@ cat /etc/motd
 sed -i "s/SSH_PORT/$SSH_PORT/g" /etc/ssh/sshd_config
 /usr/sbin/sshd
 
-$STARTUP_COMMAND
+$STARTUPCOMMAND
