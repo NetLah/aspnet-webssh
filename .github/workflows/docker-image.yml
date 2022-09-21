@@ -25,6 +25,8 @@ jobs:
       - name: Skip docker build
         if: ${{ matrix.image-tag == 'focal' && startsWith(env.ASPNET_VERSION, '7.0') }}
         run: echo "SKIP_DOCKER=true" >> $GITHUB_ENV
+      - uses: actions/checkout@v2
+        if: ${{ env.SKIP_DOCKER != 'true' }}
       - name: Docker meta
         id: meta
         if: ${{ env.SKIP_DOCKER != 'true' }}
@@ -50,7 +52,5 @@ jobs:
         if: ${{ success() && env.SKIP_DOCKER != 'true' && github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/') }}
         env:
           IMAGE_TAG: ${{ env.ASPNET_VERSION }}-${{ matrix.image-tag }}
-        run: |
-          pwd
-          ls -alh
-          pwsh -c "./docker-build.ps1 -imageTag ${{ env.IMAGE_TAG }} -dockerRepository ${{ secrets.DOCKER_HUB_REPOS }} -Verbose"
+        shell: pwsh
+        run: ./docker-build.ps1 -imageTag ${{ env.IMAGE_TAG }} -dockerRepository ${{ secrets.DOCKER_HUB_REPOS }} -Verbose
