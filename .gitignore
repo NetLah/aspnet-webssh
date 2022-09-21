@@ -9,3 +9,5 @@ _*.ps1
 *.pfx
 *.cer
 *.crt
+[Bb]in/
+[Oo]bj/
