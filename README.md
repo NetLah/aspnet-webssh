@@ -11,6 +11,10 @@ A customized ASP.NET Core container supports Azure AppService Web SSH. Docker im
 
 https://github.com/NetLah/aspnet-webssh
 
+## Build Status
+
+[![Docker Image CI](https://github.com/NetLah/aspnet-webssh/actions/workflows/docker-image.yml/badge.svg)](https://github.com/NetLah/aspnet-webssh/actions/workflows/docker-image.yml)
+
 ## Reference
 
 - https://learn.microsoft.com/en-us/azure/app-service/configure-custom-container?pivots=container-linux#enable-ssh
