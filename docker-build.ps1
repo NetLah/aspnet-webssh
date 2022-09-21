@@ -1,107 +1,65 @@
 [CmdletBinding()]
 param (
-    [Parameter(Mandatory = $true)] [string] $sdkImageTag = '6.0-alpine',
-    [Parameter(Mandatory = $true)] [string[]] $dockerRepository = @('netlah/aspnet-ssh'),
-    [Parameter(Mandatory = $true)] [string] $Path = 'bin',
+    [Parameter(Mandatory = $true)] [string] $imageTag = '6.0-alpine',
+    [Parameter(Mandatory = $false)] [string] $Path = 'src',   
+    [Parameter(Mandatory = $false)] [string[]] $dockerRepository = @('netlah/aspnet-webssh'),
     [Parameter(Mandatory = $false)] [string] $Labels,
     [Parameter(Mandatory = $false)] [switch] $WhatIf
 )
 
-$supported = @(
-    '6.0.8-alpine3.16', '6.0-alpine'
-    '6.0.8-bullseye-slim', '6.0-bullseye-slim'
-    '6.0.8-focal', '6.0-focal'
-    '6.0.8-jammy', '6.0-jammy'
+$mappingSdkMajor = @{
+    '^6\.0(\.\d+)?-alpine(.*)$'               = '6.0-alpine'
+    '^6\.0(\.\d+)?-bullseye-slim$'            = '6.0-bullseye-slim'
+    '^6\.0(\.\d+)?-focal$'                    = '6.0-focal'
+    '^6\.0(\.\d+)?-jammy$'                    = '6.0-jammy'
 
-    '6.0.9-alpine3.16', '6.0-alpine'
-    '6.0.9-bullseye-slim', '6.0-bullseye-slim'
-    '6.0.9-focal', '6.0-focal'
-    '6.0.9-jammy', '6.0-jammy'
-
-    '7.0.0-rc.1-alpine3.16', '7.0-alpine'
-    '7.0.0-rc.1-bullseye-slim', '7.0-bullseye-slim'
-    '7.0.0-rc.1-jammy', '7.0-jammy'
-)
-$mappingSdk = @{
-    '6.0.8-alpine3.16'         = '6.0-alpine'
-    '6.0.8-bullseye-slim'      = '6.0-bullseye-slim'
-    '6.0.8-focal'              = '6.0-focal'
-    '6.0.8-jammy'              = '6.0-jammy'
-
-    '6.0.9-alpine3.16'         = '6.0-alpine'
-    '6.0.9-bullseye-slim'      = '6.0-bullseye-slim'
-    '6.0.9-focal'              = '6.0-focal'
-    '6.0.9-jammy'              = '6.0-jammy'
-    '7.0.0-rc.1-alpine3.16'    = '7.0-alpine'
-    '7.0.0-rc.1-bullseye-slim' = '7.0-bullseye-slim'
-    '7.0.0-rc.1-jammy'         = '7.0-jammy'
-
-    '6.0-alpine'               = '6.0-alpine'
-    '6.0-bullseye-slim'        = '6.0-bullseye-slim'
-    '6.0-focal'                = '6.0-focal'
-    '6.0-jammy'                = '6.0-jammy'
-    '7.0-alpine'               = '7.0-alpine'
-    '7.0-bullseye-slim'        = '7.0-bullseye-slim'
-    '7.0-jammy'                = '7.0-jammy'
+    '^7\.0(\.\d+(-rc[^-]+)?)?-alpine(.*)$'    = '7.0-alpine'
+    '^7\.0(\.\d+(-rc[^-]+)?)?-bullseye-slim$' = '7.0-bullseye-slim'
+    '^7\.0(\.\d+(-rc[^-]+)?)?-jammy$'         = '7.0-jammy'
 }
 $latestTag = '6.0-alpine'   # not use yet
-# context mapping name
-$mapping = @{
-    '6.0-alpine'        = [string[]]@('alpine', '6.0-alpine')
-    '6.0-bullseye-slim' = [string[]]@('debian')
-    '6.0-focal'         = [string[]]@('debian') #ubuntu
-    '6.0-jammy'         = [string[]]@('debian') #ubuntu
-    '7.0-alpine'        = [string[]]@('alpine', '6.0-alpine')
-    '7.0-bullseye-slim' = [string[]]@('debian')
-    '7.0-jammy'         = [string[]]@('debian') #ubuntu
-}
-# sharing mapping name
-$sharing = @{
-    '6.0-alpine'        = [string[]]@('base_docker', 'shared')
-    '6.0-bullseye-slim' = [string[]]@('base_docker', 'shared')
-    '6.0-focal'         = [string[]]@('base_docker', 'shared')
-    '6.0-jammy'         = [string[]]@('base_docker', 'shared')
-    '7.0-alpine'        = [string[]]@('base_docker', 'shared')
-    '7.0-bullseye-slim' = [string[]]@('base_docker', 'shared')
-    '7.0-jammy'         = [string[]]@('base_docker', 'shared')
+
+# sdkMajor mappings arch
+$mappingArch = @{
+    '6.0-alpine'        = 'alpine'
+    '6.0-bullseye-slim' = 'debian'
+    '6.0-focal'         = 'debian'  #ubuntu 20.04 LTS
+    '6.0-jammy'         = 'debian'  #ubuntu 22.04 LTS
+    '7.0-alpine'        = 'alpine'
+    '7.0-bullseye-slim' = 'debian'
+    '7.0-jammy'         = 'debian'  #ubuntu 22.04 LTS
 }
 
-$sdkImageTagMajor = $mappingSdk[$sdkImageTag]
-[string[]]$contextNames = $mapping[$sdkImageTagMajor]
+function getMajorSdk($imageTag) {
+    foreach ($entry in $mappingSdkMajor.GetEnumerator()) {
+        if ($imageTag -match $entry.Key) {
+            return $entry.Value
+        }
+    } 
+}
 
-if (!$contextNames -or !$sdkImageTag -or !$sdkImageTagMajor -or !$supported.Contains($sdkImageTag)) {
-    Write-Error "SDK Image Tag '$sdkImageTag' is not supported" -ErrorAction Stop
+$imageTagMajor = getMajorSdk $imageTag
+$imageArch = $mappingArch[$imageTagMajor]
+
+if (!$imageTag -or !$imageTagMajor -or !$imageArch) {
+    Write-Error "SDK Image Tag '$imageTag' is not supported" -ErrorAction Stop
 }
 
 Write-Output "Labels (raw): $Labels"
 $labelStrs = $Labels.Trim() -split '\r|\n|;|,' | Where-Object { $_ }
 
-[string[]]$shares = $sharing[$sdkImageTagMajor]
-[string[]]$dockerContexts = @() + $shares + $contextNames
-
 $dockerImages = @()
 foreach ($dockerRepos in $dockerRepository) {
-    $dockerImages += @("$($dockerRepos):$($sdkImageTag)")
-    if ($sdkImageTag -ne $sdkImageTagMajor) {
-        $dockerImages += @("$($dockerRepos):$($sdkImageTagMajor)")
+    $dockerImages += @("$($dockerRepos):$($imageTag)")
+    if ($imageTag -ne $imageTagMajor) {
+        $dockerImages += @("$($dockerRepos):$($imageTagMajor)")
     }
-    if ($latestTag -eq $sdkImageTagMajor -or $latestTag -eq $sdkImageTag) {
+    if ($latestTag -eq $imageTagMajor -or $latestTag -eq $imageTag) {
         $dockerImages += @("$($dockerRepos):lastest")
     }
 }
 
-Remove-Item -Path $Path -Recurse -Force -Confirm:$false -ErrorAction Ignore -Verbose
-$buildFolder = New-Item -Name $Path -ItemType 'Directory' -ErrorAction Stop
-
-Write-Host "Copy from contexts: $dockerContexts"
-$dockerContextSource = "src"
-foreach ($dockerContext in $dockerContexts) {
-    Write-Verbose "Source: '$dockerContextSource/$dockerContext'"
-    Write-Verbose "Destination: '$($buildFolder.FullName)' '$buildFolder'"
-    Copy-Item -Recurse -Force -Path "$dockerContextSource/$dockerContext/*" -Destination $Path  -ErrorAction Stop -Verbose
-}
-
-$params = @('build', $Path, '--pull', '--build-arg', "SDK_IMAGE_TAG=$sdkImageTag", '--progress=plain')
+$params = @('build', "$Path/$imageArch", '--pull', '--build-arg', "SDK_IMAGE_TAG=$imageTag", '--progress=plain')
 
 if ($labelStrs) {
     $params += $labelStrs | ForEach-Object { @('--label', $_) }
