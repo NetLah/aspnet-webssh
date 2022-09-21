@@ -13,9 +13,8 @@ jobs:
         image-tag: [alpine3.16, bullseye-slim, focal, jammy]
     name: ${{ matrix.image-tag }}
     runs-on: ubuntu-latest
-    environment:
+    env:
       ASPNET_VERSION: "6.8.0"
-      IMAGE_TAG: "${{ env.ASPNET_VERSION }}-${{ matrix.image-tag }}"
       SKIP_DOCKER: "false"
     steps:
       - name: Set version from TAG
@@ -43,9 +42,13 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: Build and push on tag
         if: ${{ success() && env.SKIP_DOCKER != 'true' && github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
+        env:
+          IMAGE_TAG: ${{ env.ASPNET_VERSION }}-${{ matrix.image-tag }}
         shell: pwsh
         run: ./docker-build.ps1 -imageTag ${{ IMAGE_TAG }} -dockerRepository netlah/aspnet-webssh,${{ secrets.DOCKER_HUB_REPOS }} -Verbose
       - name: Build and push on branch
         if: ${{ success() && env.SKIP_DOCKER != 'true' && github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/') }}
+        env:
+          IMAGE_TAG: ${{ env.ASPNET_VERSION }}-${{ matrix.image-tag }}
         shell: pwsh
         run: ./docker-build.ps1 -imageTag ${{ IMAGE_TAG }} -dockerRepository ${{ secrets.DOCKER_HUB_REPOS }} -Verbose
