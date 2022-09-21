@@ -51,5 +51,6 @@ jobs:
         env:
           IMAGE_TAG: ${{ env.ASPNET_VERSION }}-${{ matrix.image-tag }}
         run: |
+          pwd
           ll
           pwsh -c "./docker-build.ps1 -imageTag ${{ env.IMAGE_TAG }} -dockerRepository ${{ secrets.DOCKER_HUB_REPOS }} -Verbose"
