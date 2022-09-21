@@ -1,7 +1,8 @@
 ARG SDK_IMAGE_TAG=6.0-alpine
 FROM mcr.microsoft.com/dotnet/aspnet:${SDK_IMAGE_TAG} AS base
 
-ENV SSH_PORT 2222
+ENV SSH_PORT=2222 \
+    TZ=UTC
 
 # Copy files in structure /etc/ssh/sshd_config, /opt/startup/init_container.sh /tmp/ssh_setup.sh
 COPY src/ /
