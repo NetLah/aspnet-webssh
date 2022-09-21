@@ -39,7 +39,9 @@ function getMajorSdk($imageTag) {
 }
 
 $imageTagMajor = getMajorSdk $imageTag
-$imageArch = $mappingArch[$imageTagMajor]
+if ($imageTagMajor) {
+    $imageArch = $mappingArch[$imageTagMajor]
+}
 
 if (!$imageTag -or !$imageTagMajor -or !$imageArch) {
     Write-Error "SDK Image Tag '$imageTag' is not supported" -ErrorAction Stop
