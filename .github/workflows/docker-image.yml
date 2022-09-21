@@ -50,4 +50,6 @@ jobs:
         if: ${{ success() && env.SKIP_DOCKER != 'true' && github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/') }}
         env:
           IMAGE_TAG: ${{ env.ASPNET_VERSION }}-${{ matrix.image-tag }}
-        run: pwsh -c "./docker-build.ps1 -imageTag ${{ env.IMAGE_TAG }} -dockerRepository ${{ secrets.DOCKER_HUB_REPOS }} -Verbose"
+        run: |
+          ll
+          pwsh -c "./docker-build.ps1 -imageTag ${{ env.IMAGE_TAG }} -dockerRepository ${{ secrets.DOCKER_HUB_REPOS }} -Verbose"
