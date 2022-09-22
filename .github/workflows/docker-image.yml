@@ -26,9 +26,7 @@ jobs:
           echo "::set-output name=reg-tag::${GITHUB_REF#refs/*/}"
           echo "IS_TAG=${{ startsWith(github.ref, 'refs/tags/') }}" >> $GITHUB_ENV
           echo "REF_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-          echo "Info github.event_name ${{ github.event_name }}"
-          echo "Info github.ref ${{ github.ref }}"
-          echo "Info github.ref_name ${{ github.ref_name }}"
+          echo "Info GITHUB_EVENT_NAME ${GITHUB_EVENT_NAME}"
           echo "Info GITHUB_REF ${GITHUB_REF}"
           echo "Info GITHUB_REF_NAME ${GITHUB_REF_NAME}"
           echo "Info GITHUB_ACTIONS ${GITHUB_ACTIONS}"
