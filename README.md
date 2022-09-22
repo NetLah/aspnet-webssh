@@ -1,4 +1,4 @@
-# ASP.NET Core container supports Azure AppService Web SSH
+# ASP.NET Core Runtime image supports Azure AppService Web SSH
 
 A customized ASP.NET Core Runtime image supports Azure AppService Web SSH. Docker image repository is on https://hub.docker.com/r/netlah/aspnet-webssh.
 
