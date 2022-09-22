@@ -30,8 +30,8 @@ jobs:
         run: |
           if [[ '${{ github.ref_name }}' =~ ^([0-9]+\.[0-9]+(\.[0-9]+)?(-.+)?)$ ]]
           then
-            echo "ASPNET_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
             echo "IS_SEMVER_TAG=true" >> $GITHUB_ENV
+            echo "ASPNET_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
             echo "Update ASPNET_VERSION to ${{ github.ref_name }}"
           else
             echo 'No match SemVer *.*.*'; 
