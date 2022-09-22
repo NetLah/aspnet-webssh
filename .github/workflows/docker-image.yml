@@ -16,7 +16,6 @@ jobs:
     env:
       ASPNET_VERSION: "6.0.9"
       SKIP_DOCKER: "false"
-      IMAGE_TAG: ${{ env.ASPNET_VERSION }}-${{ matrix.image-tag }}
       IS_SEMVER_TAG: "false"
       IS_TAG: ${{ steps.check_tag.outputs.is-tag }}
       REF_TAG: ${{ steps.check_tag.outputs.reg-tag }}
@@ -60,5 +59,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: Build and push
         if: ${{ success() && env.SKIP_DOCKER != 'true' && github.event_name != 'pull_request' }}
+        env:
+          IMAGE_TAG: ${{ env.ASPNET_VERSION }}-${{ matrix.image-tag }}
         shell: pwsh
         run: ./docker-build.ps1 -imageTag ${{ env.IMAGE_TAG }} -dockerRepository $( ${{ env.IS_SEMVER_TAG }} -eq true ? 'netlah/aspnet-webssh,')${{ secrets.DOCKER_HUB_REPOS }} -Labels "${{ steps.meta.outputs.labels }}" -Verbose
