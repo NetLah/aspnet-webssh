@@ -17,13 +17,15 @@ jobs:
       ASPNET_VERSION: "6.0.9"
       SKIP_DOCKER: "false"
       IS_SEMVER_TAG: "false"
-      IS_TAG: ${{ steps.check_tag.outputs.is-tag }}
-      REF_TAG: ${{ steps.check_tag.outputs.reg-tag }}
+      IS_TAG: "false"
+      REF_TAG: ""
     steps:
       - name: Check Tag
         run: |
           echo "::set-output name=is-tag::${{ startsWith(github.ref, 'refs/tags/') }}\n"
           echo "::set-output name=reg-tag::${GITHUB_REF#refs/*/}\n"
+          echo "IS_TAG=${{ startsWith(github.ref, 'refs/tags/') }}" >> $GITHUB_ENV
+          echo "REF_TAG=${GITHUB_REF#refs/*/}\n"
         id: check_tag
       - name: Set version from TAG
         if: ${{ env.IS_TAG = 'true' }}
@@ -34,10 +36,10 @@ jobs:
             echo "IS_SEMVER_TAG=true" >> $GITHUB_ENV
             echo "Update ASPNET_VERSION to ${{ env.REF_TAG }} / ${{ github.ref_name }}"
           else
-            echo 'No match version *.*.*'; 
+            echo 'No match SemVer *.*.*'; 
           fi
       - name: Skip docker build
-        if: ${{ matrix.image-tag == 'focal' && startsWith(env.ASPNET_VERSION, '7.0') }}
+        if: ${{ matrix.image-tag == 'focal' && startsWith(env.ASPNET_VERSION, '7.') }}
         run: echo "SKIP_DOCKER=true" >> $GITHUB_ENV
       - uses: actions/checkout@v2
         if: ${{ env.SKIP_DOCKER != 'true' }}
