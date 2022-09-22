@@ -16,14 +16,21 @@ jobs:
     env:
       ASPNET_VERSION: "6.0.9"
       SKIP_DOCKER: "false"
+      IS_SEMVER_TAG: "false"
+      IS_TAG: "false"
     steps:
-      - name: Set version from TAG
-        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+      - name: Check Tag Ref
+        run: echo "IS_TAG=${{ startsWith(github.ref, 'refs/tags/') }}" >> $GITHUB_ENV
+      - name: Set version from Tag
+        if: ${{ env.IS_TAG == 'true' }}
         run: |
-          echo "ASPNET_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-          echo "Update ASPNET_VERSION to ${GITHUB_REF#refs/*/}"
+          if [[ '${{ github.ref_name }}' =~ ^([0-9]+\.[0-9]+(\.[0-9]+)?(-.+)?)$ ]]; then
+            echo "IS_SEMVER_TAG=true" >> $GITHUB_ENV
+            echo "ASPNET_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
+            echo "Update ASPNET_VERSION to ${{ github.ref_name }}"
+          fi
       - name: Skip docker build
-        if: ${{ matrix.image-tag == 'focal' && startsWith(env.ASPNET_VERSION, '7.0') }}
+        if: ${{ matrix.image-tag == 'focal' && startsWith(env.ASPNET_VERSION, '7.') }}
         run: echo "SKIP_DOCKER=true" >> $GITHUB_ENV
       - uses: actions/checkout@v2
         if: ${{ env.SKIP_DOCKER != 'true' }}
@@ -34,23 +41,23 @@ jobs:
         with:
           images: netlah/aspnet-webssh
           tags: |
-            type=ref,event=branch,priority=600,prefix=,suffix=
-            type=sha,enable=true,priority=500,prefix=sha-,suffix=,format=short
+            type=match,enable=true,priority=900,prefix=,suffix=,pattern=^(\d+\.\d+(\.\d+)?(-.+)?)$,group=1
+            type=sha,enable=true,priority=600,prefix=sha-,suffix=,format=short
+            type=ref,event=branch,priority=500,prefix=,suffix=
       - name: Login to Docker Hub
         if: ${{ success() && env.SKIP_DOCKER != 'true' && github.event_name != 'pull_request' }}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: Build and push on tag
-        if: ${{ success() && env.SKIP_DOCKER != 'true' && github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
+      - name: Build and push
+        if: ${{ success() && env.SKIP_DOCKER != 'true' && github.event_name != 'pull_request' }}
         env:
           IMAGE_TAG: ${{ env.ASPNET_VERSION }}-${{ matrix.image-tag }}
         shell: pwsh
-        run: ./docker-build.ps1 -imageTag ${{ env.IMAGE_TAG }} -dockerRepository netlah/aspnet-webssh,${{ secrets.DOCKER_HUB_REPOS }} -Labels "${{ steps.meta.outputs.labels }}" -Verbose
-      - name: Build and push on branch
-        if: ${{ success() && env.SKIP_DOCKER != 'true' && github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/') }}
-        env:
-          IMAGE_TAG: ${{ env.ASPNET_VERSION }}-${{ matrix.image-tag }}
-        shell: pwsh
-        run: ./docker-build.ps1 -imageTag ${{ env.IMAGE_TAG }} -dockerRepository ${{ secrets.DOCKER_HUB_REPOS }} -Labels "${{ steps.meta.outputs.labels }}" -Verbose
+        run: |
+          if (${{ env.IS_SEMVER_TAG }} -eq true) { $repos += @(netlah/aspnet-webssh) }
+          $repos += @('${{ secrets.DOCKER_HUB_REPOS }}')
+          ./docker-build.ps1 -imageTag ${{ env.IMAGE_TAG }} -dockerRepository $repos -Labels $(@'
+          ${{ steps.meta.outputs.labels }}
+          '@.Trim()) -Verbose
