@@ -59,5 +59,5 @@ jobs:
           if (${{ env.IS_SEMVER_TAG }} -eq true) { $repos += @(netlah/aspnet-webssh) }
           $repos += @('${{ secrets.DOCKER_HUB_REPOS }}')
           ./docker-build.ps1 -imageTag ${{ env.IMAGE_TAG }} -dockerRepository $repos -Labels $(@'
-            ${{ steps.meta.outputs.labels }}
-            '@.Trim()) -Verbose
+          ${{ steps.meta.outputs.labels }}
+          '@.Trim()) -Verbose
