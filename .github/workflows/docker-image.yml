@@ -64,4 +64,4 @@ jobs:
         env:
           IMAGE_TAG: ${{ env.ASPNET_VERSION }}-${{ matrix.image-tag }}
         shell: pwsh
-        run: ./docker-build.ps1 -imageTag ${{ env.IMAGE_TAG }} -dockerRepository $( ${{ env.IS_SEMVER_TAG }} -eq true ? 'netlah/aspnet-webssh,':'' )${{ secrets.DOCKER_HUB_REPOS }} -Labels "${{ steps.meta.outputs.labels }}" -Verbose
+        run: ./docker-build.ps1 -imageTag ${{ env.IMAGE_TAG }} -dockerRepository $( (${{ env.IS_SEMVER_TAG }} -eq true ? @('netlah/aspnet-webssh'):@()) + @('${{ secrets.DOCKER_HUB_REPOS }}') ) -Labels "${{ steps.meta.outputs.labels }}" -Verbose
