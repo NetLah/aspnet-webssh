@@ -20,14 +20,20 @@ jobs:
       IS_TAG: "false"
       REF_TAG: ""
     steps:
-      - name: Check Tag
+      - name: Check Tag Ref
         run: |
-          echo "::set-output name=is-tag::${{ startsWith(github.ref, 'refs/tags/') }}\n"
-          echo "::set-output name=reg-tag::${GITHUB_REF#refs/*/}\n"
+          echo "::set-output name=is-tag::${{ startsWith(github.ref, 'refs/tags/') }}"
+          echo "::set-output name=reg-tag::${GITHUB_REF#refs/*/}"
           echo "IS_TAG=${{ startsWith(github.ref, 'refs/tags/') }}" >> $GITHUB_ENV
           echo "REF_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+          echo "Info github.event_name ${{ github.event_name }}"
+          echo "Info github.ref ${{ github.ref }}"
+          echo "Info github.ref_name ${{ github.ref_name }}"
+          echo "Info GITHUB_REF ${GITHUB_REF}"
+          echo "Info GITHUB_REF_NAME ${GITHUB_REF_NAME}"
+          echo "Info GITHUB_ACTIONS ${GITHUB_ACTIONS}"
         id: check_tag
-      - name: Set version from TAG
+      - name: Set version from Tag
         if: ${{ env.IS_TAG == 'true' }}
         run: |
           if [[ '${{ github.ref_name }}' =~ ^([0-9]+\.[0-9]+(\.[0-9]+)?(-.+)?)$ ]]
