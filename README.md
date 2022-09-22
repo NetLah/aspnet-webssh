@@ -39,6 +39,10 @@ ASP.NET Core v6.0.9
 
 ![aspnet-webssh](https://raw.githubusercontent.com/NetLah/aspnet-webssh/main/docs/aspnet-webssh.png)
 
+## Test SSH to container
+
+![ssh_2222_container](https://raw.githubusercontent.com/NetLah/aspnet-webssh/main/docs/ssh_2222_container.png)
+
 ## Reference
 
 - https://learn.microsoft.com/en-us/azure/app-service/configure-custom-container?pivots=container-linux#enable-ssh
