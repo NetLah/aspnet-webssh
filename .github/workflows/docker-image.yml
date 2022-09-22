@@ -18,18 +18,12 @@ jobs:
       SKIP_DOCKER: "false"
       IS_SEMVER_TAG: "false"
       IS_TAG: "false"
-      REF_TAG: ""
     steps:
       - name: Check Tag Ref
         run: |
           echo "::set-output name=is-tag::${{ startsWith(github.ref, 'refs/tags/') }}"
           echo "::set-output name=reg-tag::${GITHUB_REF#refs/*/}"
           echo "IS_TAG=${{ startsWith(github.ref, 'refs/tags/') }}" >> $GITHUB_ENV
-          echo "REF_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-          echo "Info GITHUB_EVENT_NAME ${GITHUB_EVENT_NAME}"
-          echo "Info GITHUB_REF ${GITHUB_REF}"
-          echo "Info GITHUB_REF_NAME ${GITHUB_REF_NAME}"
-          echo "Info GITHUB_ACTIONS ${GITHUB_ACTIONS}"
         id: check_tag
       - name: Set version from Tag
         if: ${{ env.IS_TAG == 'true' }}
@@ -38,7 +32,7 @@ jobs:
           then
             echo "ASPNET_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
             echo "IS_SEMVER_TAG=true" >> $GITHUB_ENV
-            echo "Update ASPNET_VERSION to ${{ env.REF_TAG }} / ${{ github.ref_name }}"
+            echo "Update ASPNET_VERSION to ${{ github.ref_name }}"
           else
             echo 'No match SemVer *.*.*'; 
           fi
