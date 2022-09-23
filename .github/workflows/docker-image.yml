@@ -17,14 +17,13 @@ jobs:
       ASPNET_VERSION: "6.0.9"
       SKIP_DOCKER: "false"
       IS_SEMVER_TAG: "false"
-      IS_TAG: "false"
+      IS_TAG: ""
     steps:
       - name: Check Tag Ref
-        run: echo "IS_TAG=${{ startsWith(github.ref, 'refs/tags/') }}" >> $GITHUB_ENV
-      - name: Set version from Tag
-        if: ${{ env.IS_TAG == 'true' }}
         run: |
-          if [[ '${{ github.ref_name }}' =~ ^([0-9]+\.[0-9]+(\.[0-9]+)?(-.+)?)$ ]]; then
+          IS_TAG=${{ startsWith(github.ref, 'refs/tags/') }}
+          echo "IS_TAG=$IS_TAG" >> $GITHUB_ENV
+          if [ "$IS_TAG" == 'true' ] && [[ '${{ github.ref_name }}' =~ ^([0-9]+\.[0-9]+(\.[0-9]+)?(-.+)?)$ ]]; then
             echo "IS_SEMVER_TAG=true" >> $GITHUB_ENV
             echo "ASPNET_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
             echo "Update ASPNET_VERSION to ${{ github.ref_name }}"
