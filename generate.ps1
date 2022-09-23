@@ -21,6 +21,6 @@ foreach ($arch in $mappingDockerContext.Keys) {
     $archDockerContext = New-Item -Name $arch -Path $srcFolder -ItemType 'Directory' -ErrorAction Stop
 
     foreach ($dockerContext in $dockerContexts) {
-        Copy-Item -Recurse -Force -Path "$dockerContextSource/$dockerContext/*" -Destination $archDockerContext  -ErrorAction Stop -Verbose
+        Copy-Item -Recurse -Force -Path "$dockerContextSource/$dockerContext/*" -Destination $archDockerContext -ErrorAction Stop -Verbose
     }
 }

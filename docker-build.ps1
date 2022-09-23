@@ -17,7 +17,7 @@ $mappingSdkMajor = @{
     '^7\.0(\.\d+(-rc[^-]+)?)?-bullseye-slim$' = '7.0-bullseye-slim'
     '^7\.0(\.\d+(-rc[^-]+)?)?-jammy$'         = '7.0-jammy'
 }
-$latestTag = '6.0-alpine'   # not use yet
+$latestTag = '6.0-alpine'
 
 # sdkMajor mappings arch
 $mappingArch = @{
@@ -68,8 +68,14 @@ if ($labelStrs) {
 }
 
 Write-Output "Docker images: $dockerImages"
+[bool]$isGitHubAction = "$Env:GITHUB_ACTIONS" -eq $true
+if (!$isGitHubAction) {
+    foreach ($dockerImage in $dockerImages) {
+        $params += @("--cache-from=$($dockerImage)")
+    }
+}
 foreach ($dockerImage in $dockerImages) {
-    $params += @("--cache-from=$($dockerImage)", "--tag=$($dockerImage)")
+    $params += @("--tag=$($dockerImage)")
 }
 
 Write-Verbose "Execute: docker $params"
