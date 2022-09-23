@@ -17,7 +17,7 @@ $mappingSdkMajor = @{
     '^7\.0(\.\d+(-rc[^-]+)?)?-bullseye-slim$' = '7.0-bullseye-slim'
     '^7\.0(\.\d+(-rc[^-]+)?)?-jammy$'         = '7.0-jammy'
 }
-$latestTag = '6.0-alpine'   # not use yet
+$latestTag = '6.0-alpine'
 
 # sdkMajor mappings arch
 $mappingArch = @{
