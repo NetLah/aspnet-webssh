@@ -68,8 +68,14 @@ if ($labelStrs) {
 }
 
 Write-Output "Docker images: $dockerImages"
+[bool]$isGitHubAction = "$Env:GITHUB_ACTIONS" -eq $true
+if (!$isGitHubAction) {
+    foreach ($dockerImage in $dockerImages) {
+        $params += @("--cache-from=$($dockerImage)")
+    }
+}
 foreach ($dockerImage in $dockerImages) {
-    $params += @("--cache-from=$($dockerImage)", "--tag=$($dockerImage)")
+    $params += @("--tag=$($dockerImage)")
 }
 
 Write-Verbose "Execute: docker $params"
