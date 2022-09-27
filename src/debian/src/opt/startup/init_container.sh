@@ -10,8 +10,24 @@ ASP.NET Core v${ASPNET_VERSION}
 EOL
 cat /etc/motd
 
-# starting sshd process
-sed -i "s/SSH_PORT/$SSH_PORT/g" /etc/ssh/sshd_config
-/usr/sbin/sshd
+_STARTUP_COMMAND=$*
 
-$STARTUPCOMMAND
+if [ ! -z "${_STARTUP_COMMAND}" ]; then
+  # use $*
+elif [ ! -z "${STARTUPCOMMAND}" ]; then
+  _STARTUP_COMMAND=$STARTUPCOMMAND
+elif [ ! -z "${STARTCOMMAND}" ]; then
+  _STARTUP_COMMAND=$STARTCOMMAND
+fi
+
+if [ ! -z "${_STARTUP_COMMAND}" ]; then
+  # starting sshd process
+  if [ ! -z "${SSH_PORT}" ]; then
+    sed -i "s/SSH_PORT/$SSH_PORT/g" /etc/ssh/sshd_config
+  fi
+  /usr/sbin/sshd
+
+  $_STARTUP_COMMAND
+else
+  echo "Missing startup command. Please use command line arguments or environment variable \$STARTUPCOMMAND."
+fi
