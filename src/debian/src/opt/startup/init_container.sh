@@ -13,7 +13,7 @@ cat /etc/motd
 _STARTUP_COMMAND=$*
 
 if [ ! -z "${_STARTUP_COMMAND}" ]; then
-  # use $*
+  :
 elif [ ! -z "${STARTUPCOMMAND}" ]; then
   _STARTUP_COMMAND=$STARTUPCOMMAND
 elif [ ! -z "${STARTCOMMAND}" ]; then

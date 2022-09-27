@@ -6,7 +6,7 @@ _STARTUP_COMMAND=$*
 echo "\$*: '$*' ${#_STARTUP_COMMAND}"
 
 if [ ! -z "${_STARTUP_COMMAND}" ]; then
-  echo "Use \$*: '$*'"
+  :
 elif [ ! -z "${STARTUPCOMMAND}" ]; then
   echo "Use STARTUPCOMMAND: '$STARTUPCOMMAND'"
   _STARTUP_COMMAND=$STARTUPCOMMAND
