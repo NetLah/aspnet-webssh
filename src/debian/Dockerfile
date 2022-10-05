@@ -6,7 +6,6 @@ ENV SSH_PORT=2222 \
 
 # Copy files in structure /etc/ssh/sshd_config, /opt/startup/init_container.sh /tmp/ssh_setup.sh
 COPY src/ /
-COPY ssh_setup.sh /tmp
 
 # Install OpenSSH and set the password for root to "Docker!". In this example, "apk add" is the install instruction for an Alpine Linux-based image.
 RUN apt-get update \
@@ -16,6 +15,5 @@ RUN apt-get update \
     && chmod -R 755 /run/sshd \
     && echo "root:Docker!" | chpasswd \
     && chmod -R +x /opt/startup \
-    && chmod +x /tmp/ssh_setup.sh \
-    && (sleep 1;/tmp/ssh_setup.sh 2>&1 > /dev/null) \
+    && (sleep 1;/opt/startup/ssh_setup.sh 2>&1 > /dev/null) \
     && rm -rf /tmp/*
