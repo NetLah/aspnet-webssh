@@ -15,7 +15,7 @@ RUN apt-get update \
     && mkdir -p /run/sshd \
     && chmod -R 755 /run/sshd \
     && echo "root:Docker!" | chpasswd \
-    && chmod -R +x /opt/startup/init_container.sh \
-    && chmod -R +x /tmp/ssh_setup.sh \
+    && chmod -R +x /opt/startup \
+    && chmod +x /tmp/ssh_setup.sh \
     && (sleep 1;/tmp/ssh_setup.sh 2>&1 > /dev/null) \
     && rm -rf /tmp/*

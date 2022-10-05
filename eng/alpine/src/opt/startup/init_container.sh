@@ -7,6 +7,7 @@ cat >/etc/motd <<EOL
 
 $(source /etc/os-release;echo $PRETTY_NAME)
 ASP.NET Core v${ASPNET_VERSION}
+Startup $(date +'%Y-%m-%d %T %z') ${TZ}
 EOL
 cat /etc/motd
 

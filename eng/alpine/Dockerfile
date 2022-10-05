@@ -14,6 +14,6 @@ RUN apk add --no-cache openssh tzdata \
     && chmod -R 755 /run/sshd \
     && echo "root:Docker!" | chpasswd \
     && chmod -R +x /opt/startup \
-    && chmod -R +x /tmp/ssh_setup.sh \
+    && chmod +x /tmp/ssh_setup.sh \
     && (sleep 1;/tmp/ssh_setup.sh 2>&1 > /dev/null) \
     && rm -rf /tmp/*
