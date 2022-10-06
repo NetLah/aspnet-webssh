@@ -28,11 +28,14 @@ jobs:
             echo "ASPNET_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
             echo "Update ASPNET_VERSION to ${{ github.ref_name }}"
           fi
+
       - name: Skip docker build
         if: ${{ matrix.image-tag == 'focal' && startsWith(env.ASPNET_VERSION, '7.') }}
         run: echo "SKIP_DOCKER=true" >> $GITHUB_ENV
+
       - uses: actions/checkout@v2
         if: ${{ env.SKIP_DOCKER != 'true' }}
+
       - name: Docker meta
         id: meta
         if: ${{ env.SKIP_DOCKER != 'true' }}
@@ -43,12 +46,28 @@ jobs:
             type=match,enable=true,priority=900,prefix=,suffix=,pattern=^(\d+\.\d+(\.\d+)?(-.+)?)$,group=1
             type=sha,enable=true,priority=600,prefix=sha-,suffix=,format=short
             type=ref,event=branch,priority=500,prefix=,suffix=
+
+      - name: Enabling Docker Daemon With experimental features
+        if: ${{ success() && env.SKIP_DOCKER != 'true' && github.event_name != 'pull_request' }}
+        run: |
+          echo 'Before update daemon.json'
+          sudo cat /etc/docker/daemon.json
+          sudo bash -c 'echo "{ "\""exec-opts"\"": ["\""native.cgroupdriver=cgroupfs"\""], "\""cgroup-parent"\"": "\""/actions_job"\"", "\""experimental"\"": true }" > /etc/docker/daemon.json'
+          echo 'After update daemon.json'
+          sudo cat /etc/docker/daemon.json
+          sudo systemctl restart docker.service
+
+      - name: Set up Docker Buildx
+        if: ${{ success() && env.SKIP_DOCKER != 'true' && github.event_name != 'pull_request' }}
+        uses: docker/setup-buildx-action@v2
+
       - name: Login to Docker Hub
         if: ${{ success() && env.SKIP_DOCKER != 'true' && github.event_name != 'pull_request' }}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
       - name: Build and push
         if: ${{ success() && env.SKIP_DOCKER != 'true' && github.event_name != 'pull_request' }}
         env:
@@ -57,6 +76,6 @@ jobs:
         run: |
           if ('${{ env.IS_SEMVER_TAG }}' -eq $true) { $repos += @('netlah/aspnet-webssh') }
           $repos += @('${{ secrets.DOCKER_HUB_REPOS }}')
-          ./docker-build.ps1 -imageTag ${{ env.IMAGE_TAG }} -dockerRepository $repos -Labels $(@'
+          ./docker-build.ps1 -imageTag ${{ env.IMAGE_TAG }} -dockerRepository $repos -Squash -Labels $(@'
           ${{ steps.meta.outputs.labels }}
           '@.Trim()) -Verbose
