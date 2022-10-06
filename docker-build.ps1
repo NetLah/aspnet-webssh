@@ -57,7 +57,7 @@ foreach ($dockerRepos in $dockerRepository) {
         $dockerImages += @("$($dockerRepos):$($imageTagMajor)")
     }
     if ($latestTag -eq $imageTagMajor -or $latestTag -eq $imageTag) {
-        $dockerImages += @("$($dockerRepos):lastest")
+        $dockerImages += @("$($dockerRepos):latest")
     }
 }
 
