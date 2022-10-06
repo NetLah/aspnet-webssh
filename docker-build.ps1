@@ -4,6 +4,7 @@ param (
     [Parameter(Mandatory = $false)] [string] $Path = 'src',   
     [Parameter(Mandatory = $false)] [string[]] $dockerRepository = @('netlah/aspnet-webssh'),
     [Parameter(Mandatory = $false)] [string] $Labels,
+    [Parameter(Mandatory = $false)] [switch] $Squash,
     [Parameter(Mandatory = $false)] [switch] $WhatIf
 )
 
@@ -62,6 +63,10 @@ foreach ($dockerRepos in $dockerRepository) {
 }
 
 $params = @('build', "$Path/$imageArch", '--pull', '--build-arg', "SDK_IMAGE_TAG=$imageTag", '--progress=plain')
+
+if ($Squash -And !($Env:OS)) {
+    $params += @('--squash')
+}
 
 if ($labelStrs) {
     $params += $labelStrs | ForEach-Object { @('--label', $_) }
