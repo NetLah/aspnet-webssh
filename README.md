@@ -32,7 +32,7 @@ Output
  /_/ \_\___/_|(_)_|\_|___| |_|    \___\___/_| \___|
 
 Alpine Linux v3.16
-ASP.NET Core v6.0.9
+ASP.NET Core v6.0.10
 Startup 2022-10-05 12:34:56 +0800 Asia/Singapore
 [02:33:30 INF] Application starting...
 [02:33:30 INF] Application initializing...

@@ -14,7 +14,7 @@ jobs:
     name: ${{ matrix.image-tag }}
     runs-on: ubuntu-latest
     env:
-      ASPNET_VERSION: "6.0.9"
+      ASPNET_VERSION: "6.0.10"
       SKIP_DOCKER: "false"
       IS_SEMVER_TAG: "false"
       IS_TAG: ""
