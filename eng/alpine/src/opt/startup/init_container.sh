@@ -25,8 +25,8 @@ if [ ! -z "${_STARTUP_COMMAND}" ]; then
   # starting sshd process
   if [ ! -z "${SSH_PORT}" ]; then
     sed -i "s/SSH_PORT/$SSH_PORT/g" /etc/ssh/sshd_config
+    /usr/sbin/sshd
   fi
-  /usr/sbin/sshd
 
   $_STARTUP_COMMAND
 else
