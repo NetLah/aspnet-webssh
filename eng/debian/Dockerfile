@@ -1,5 +1,5 @@
-ARG SDK_IMAGE_TAG=6.0-bullseye-slim
-FROM mcr.microsoft.com/dotnet/aspnet:${SDK_IMAGE_TAG} AS base
+ARG IMAGE_TAG=6.0-bullseye-slim
+FROM mcr.microsoft.com/dotnet/aspnet:${IMAGE_TAG} AS base
 
 ENV SSH_PORT=2222 \
     TZ=UTC

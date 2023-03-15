@@ -9,26 +9,53 @@ param (
 )
 
 $mappingSdkMajor = @{
-    '^6\.0(\.\d+)?-alpine(.*)$'               = '6.0-alpine'
-    '^6\.0(\.\d+)?-bullseye-slim$'            = '6.0-bullseye-slim'
-    '^6\.0(\.\d+)?-focal$'                    = '6.0-focal'
-    '^6\.0(\.\d+)?-jammy$'                    = '6.0-jammy'
+    '^6\.0(\.\d+)?-alpine(.*)$'                     = '6.0-alpine'
+    '^6\.0(\.\d+)?-bullseye-slim$'                  = '6.0-bullseye-slim'
+    '^6\.0(\.\d+)?-focal$'                          = '6.0-focal'
+    '^6\.0(\.\d+)?-jammy$'                          = '6.0-jammy'
 
-    '^7\.0(\.\d+(-rc[^-]+)?)?-alpine(.*)$'    = '7.0-alpine'
-    '^7\.0(\.\d+(-rc[^-]+)?)?-bullseye-slim$' = '7.0-bullseye-slim'
-    '^7\.0(\.\d+(-rc[^-]+)?)?-jammy$'         = '7.0-jammy'
+    '^7\.0(\.\d+)?-alpine(.*)$'                     = '7.0-alpine'
+    '^7\.0(\.\d+)?-bullseye-slim$'                  = '7.0-bullseye-slim'
+    '^7\.0(\.\d+)?-jammy$'                          = '7.0-jammy'
+
+    '^8\.0(\.\d+(-preview[^-]+)?)?-alpine(.*)$'     = '8.0-preview-alpine'
+    '^8\.0(\.\d+(-preview[^-]+)?)?-bookworm-slim$'  = '8.0-preview-bookworm-slim'
+    '^8\.0(\.\d+(-preview[^-]+)?)?-jammy$'          = '8.0-preview-jammy'
+    '^8\.0(\.\d+(-preview[^-]+)?)?-jammy-chiseled$' = '8.0-preview-jammy-chiseled'
+    
+    '^8\.0(\.\d+(-rc[^-]+)?)?-alpine(.*)$'          = '8.0-rc-alpine'
+    '^8\.0(\.\d+(-rc[^-]+)?)?-bookworm-slim$'       = '8.0-rc-bookworm-slim'
+    '^8\.0(\.\d+(-rc[^-]+)?)?-jammy$'               = '8.0-rc-jammy'
+    '^8\.0(\.\d+(-rc[^-]+)?)?-jammy-chiseled$'      = '8.0-rc-jammy-chiseled'
+    
+    '^8\.0(\.\d+)?-alpine(.*)$'                     = '8.0-alpine'
+    '^8\.0(\.\d+)?-bookworm-slim$'                  = '8.0-bookworm-slim'
+    '^8\.0(\.\d+)?-jammy$'                          = '8.0-jammy'
+    '^8\.0(\.\d+)?-jammy-chiseled$'                 = '8.0-jammy-chiseled'
 }
 $latestTag = '6.0-alpine'
 
 # sdkMajor mappings arch
 $mappingArch = @{
-    '6.0-alpine'        = 'alpine'
-    '6.0-bullseye-slim' = 'debian'
-    '6.0-focal'         = 'debian'  #ubuntu 20.04 LTS
-    '6.0-jammy'         = 'debian'  #ubuntu 22.04 LTS
-    '7.0-alpine'        = 'alpine'
-    '7.0-bullseye-slim' = 'debian'
-    '7.0-jammy'         = 'debian'  #ubuntu 22.04 LTS
+    '6.0-alpine'                 = 'alpine'
+    '6.0-bullseye-slim'          = 'debian'
+    '6.0-focal'                  = 'debian'  #ubuntu 20.04 LTS
+    '6.0-jammy'                  = 'debian'  #ubuntu 22.04 LTS
+    '7.0-alpine'                 = 'alpine'
+    '7.0-bullseye-slim'          = 'debian'
+    '7.0-jammy'                  = 'debian'  #ubuntu 22.04 LTS
+    '8.0-preview-alpine'         = 'alpine'
+    '8.0-preview-bookworm-slim'  = 'debian'
+    '8.0-preview-jammy'          = 'debian'  #ubuntu 22.04 LTS
+    '8.0-preview-jammy-chiseled' = 'debian'  #ubuntu 22.04 LTS
+    '8.0-rc-alpine'              = 'alpine'
+    '8.0-rc-bookworm-slim'       = 'debian'
+    '8.0-rc-jammy'               = 'debian'  #ubuntu 22.04 LTS
+    '8.0-rc-jammy-chiseled'      = 'debian'  #ubuntu 22.04 LTS
+    '8.0-alpine'                 = 'alpine'
+    '8.0-bookworm-slim'          = 'debian'
+    '8.0-jammy'                  = 'debian'  #ubuntu 22.04 LTS
+    '8.0-jammy-chiseled'         = 'debian'  #ubuntu 22.04 LTS
 }
 
 function getMajorSdk($imageTag) {
@@ -62,7 +89,12 @@ foreach ($dockerRepos in $dockerRepository) {
     }
 }
 
-$params = @('build', "$Path/$imageArch", '--pull', '--build-arg', "SDK_IMAGE_TAG=$imageTag", '--progress=plain')
+$sourceImageTag = $imageTag
+if ($imageTagMajor -match '^8\.0\.0-(preview|rc)') {
+    $sourceImageTag = $imageTagMajor
+}
+
+$params = @('build', "$Path/$imageArch", '--pull', '--build-arg', "IMAGE_TAG=$sourceImageTag", '--progress=plain')
 
 if ($Squash -And !($Env:OS)) {
     $params += @('--squash')

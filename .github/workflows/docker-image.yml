@@ -10,7 +10,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image-tag: [alpine3.16, bullseye-slim, focal, jammy]
+        image-tag:
+          [
+            alpine3.17,
+            bookworm-slim,
+            bullseye-slim,
+            focal,
+            jammy,
+            jammy-chiseled,
+          ]
     name: ${{ matrix.image-tag }}
     runs-on: ubuntu-latest
     env:
@@ -30,17 +38,33 @@ jobs:
               echo "Update ASPNET_VERSION to ${{ github.ref_name }}"
             fi
           else
-            ASPNET_VER=$( [ '${{ matrix.image-tag }}' == 'focal' ] && ( echo '6.0' ) || ( echo '7.0' ) )
-            ASPNET_VERSION=$(docker run --rm mcr.microsoft.com/dotnet/aspnet:$ASPNET_VER-${{ matrix.image-tag }} sh -c 'echo $ASPNET_VERSION')
+            # ASPNET_VER=$( [ '${{ matrix.image-tag }}' == 'bookworm-slim' ] && ( echo '8.0-preview' ) || [ '${{ matrix.image-tag }}' == 'focal' ] && ( echo '6.0' ) || ( echo '7.0' ) )
+            ASPNET_VER=7.0
+            if [ '${{ matrix.image-tag }}' == 'bookworm-slim' ] || [ '${{ matrix.image-tag }}' == 'jammy-chiseled' ] ; then
+              ASPNET_VER=8.0-preview
+            elif [ '${{ matrix.image-tag }}' == 'focal' ]; then
+              ASPNET_VER=6.0
+            fi
+            #ASPNET_VERSION=$(docker run --rm mcr.microsoft.com/dotnet/aspnet:$ASPNET_VER-${{ matrix.image-tag }} sh -c 'echo $ASPNET_VERSION')
+            docker pull mcr.microsoft.com/dotnet/aspnet:$ASPNET_VER-${{ matrix.image-tag }}
+            ASPNET_VERSION=$(docker inspect mcr.microsoft.com/dotnet/aspnet:$ASPNET_VER-${{ matrix.image-tag }} --format "{{ index (index .Config.Env) }}" | tr ' ' '\n' | grep ASPNET_VERSION= | sed 's/^.*=//' | sed 's/]$//')
             echo "ASPNET_VERSION=$ASPNET_VERSION" >> $GITHUB_ENV
             echo "Update ASPNET_VERSION to $ASPNET_VERSION"
           fi
 
-      - name: Skip docker build
-        if: ${{ matrix.image-tag == 'focal' && startsWith(env.ASPNET_VERSION, '7.') }}
+      - name: Skip docker build .NET 8.0
+        if: ${{ (matrix.image-tag == 'bullseye-slim' || matrix.image-tag == 'focal') && startsWith(env.ASPNET_VERSION, '8.') }}
         run: echo "SKIP_DOCKER=true" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v2
+      - name: Skip docker build .NET 7.0
+        if: ${{ (matrix.image-tag == 'bookworm-slim' || matrix.image-tag == 'focal' || matrix.image-tag == 'jammy-chiseled') && startsWith(env.ASPNET_VERSION, '7.') }}
+        run: echo "SKIP_DOCKER=true" >> $GITHUB_ENV
+
+      - name: Skip docker build .NET 6.0
+        if: ${{ (matrix.image-tag == 'bookworm-slim' || matrix.image-tag == 'jammy-chiseled') && startsWith(env.ASPNET_VERSION, '6.') }}
+        run: echo "SKIP_DOCKER=true" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v3
         if: ${{ env.SKIP_DOCKER != 'true' }}
 
       - name: Docker meta
