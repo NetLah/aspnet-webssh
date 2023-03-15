@@ -46,6 +46,7 @@ jobs:
               ASPNET_VER=6.0
             fi
             #ASPNET_VERSION=$(docker run --rm mcr.microsoft.com/dotnet/aspnet:$ASPNET_VER-${{ matrix.image-tag }} sh -c 'echo $ASPNET_VERSION')
+            docker pull mcr.microsoft.com/dotnet/aspnet:$ASPNET_VER-${{ matrix.image-tag }}
             ASPNET_VERSION=$(docker inspect mcr.microsoft.com/dotnet/aspnet:$ASPNET_VER-${{ matrix.image-tag }} --format "{{ index (index .Config.Env) }}" | tr ' ' '\n' | grep ASPNET_VERSION= | sed 's/^.*=//')
             echo "ASPNET_VERSION=$ASPNET_VERSION" >> $GITHUB_ENV
             echo "Update ASPNET_VERSION to $ASPNET_VERSION"
