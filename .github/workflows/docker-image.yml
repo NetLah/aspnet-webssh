@@ -40,7 +40,7 @@ jobs:
           else
             # ASPNET_VER=$( [ '${{ matrix.image-tag }}' == 'bookworm-slim' ] && ( echo '8.0-preview' ) || [ '${{ matrix.image-tag }}' == 'focal' ] && ( echo '6.0' ) || ( echo '7.0' ) )
             ASPNET_VER=7.0
-            if [ '${{ matrix.image-tag }}' == 'bookworm-slim' ]; then
+            if [ '${{ matrix.image-tag }}' == 'bookworm-slim' ] || [ '${{ matrix.image-tag }}' == 'jammy-chiseled' ] ; then
               ASPNET_VER=8.0-preview
             elif [ '${{ matrix.image-tag }}' == 'focal' ]; then
               ASPNET_VER=6.0
