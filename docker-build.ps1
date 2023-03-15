@@ -27,6 +27,11 @@ $mappingSdkMajor = @{
     '^8\.0(\.\d+(-rc[^-]+)?)?-bookworm-slim$'       = '8.0-rc-bookworm-slim'
     '^8\.0(\.\d+(-rc[^-]+)?)?-jammy$'               = '8.0-rc-jammy'
     '^8\.0(\.\d+(-rc[^-]+)?)?-jammy-chiseled$'      = '8.0-rc-jammy-chiseled'
+    
+    '^8\.0(\.\d+)?-alpine(.*)$'                     = '8.0-alpine'
+    '^8\.0(\.\d+)?-bookworm-slim$'                  = '8.0-bookworm-slim'
+    '^8\.0(\.\d+)?-jammy$'                          = '8.0-jammy'
+    '^8\.0(\.\d+)?-jammy-chiseled$'                 = '8.0-jammy-chiseled'
 }
 $latestTag = '6.0-alpine'
 
@@ -47,6 +52,10 @@ $mappingArch = @{
     '8.0-rc-bookworm-slim'       = 'debian'
     '8.0-rc-jammy'               = 'debian'  #ubuntu 22.04 LTS
     '8.0-rc-jammy-chiseled'      = 'debian'  #ubuntu 22.04 LTS
+    '8.0-alpine'                 = 'alpine'
+    '8.0-bookworm-slim'          = 'debian'
+    '8.0-jammy'                  = 'debian'  #ubuntu 22.04 LTS
+    '8.0-jammy-chiseled'         = 'debian'  #ubuntu 22.04 LTS
 }
 
 function getMajorSdk($imageTag) {
