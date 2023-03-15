@@ -17,18 +17,25 @@ $mappingSdkMajor = @{
     '^7\.0(\.\d+(-rc[^-]+)?)?-alpine(.*)$'    = '7.0-alpine'
     '^7\.0(\.\d+(-rc[^-]+)?)?-bullseye-slim$' = '7.0-bullseye-slim'
     '^7\.0(\.\d+(-rc[^-]+)?)?-jammy$'         = '7.0-jammy'
+
+    '^8\.0(\.\d+(-rc[^-]+)?)?-alpine(.*)$'    = '8.0-preview-alpine'
+    '^8\.0(\.\d+(-rc[^-]+)?)?-bookworm-slim$' = '8.0-preview-bookworm-slim'
+    '^8\.0(\.\d+(-rc[^-]+)?)?-jammy$'         = '8.0-preview-jammy'
 }
 $latestTag = '6.0-alpine'
 
 # sdkMajor mappings arch
 $mappingArch = @{
-    '6.0-alpine'        = 'alpine'
-    '6.0-bullseye-slim' = 'debian'
-    '6.0-focal'         = 'debian'  #ubuntu 20.04 LTS
-    '6.0-jammy'         = 'debian'  #ubuntu 22.04 LTS
-    '7.0-alpine'        = 'alpine'
-    '7.0-bullseye-slim' = 'debian'
-    '7.0-jammy'         = 'debian'  #ubuntu 22.04 LTS
+    '6.0-alpine'                = 'alpine'
+    '6.0-bullseye-slim'         = 'debian'
+    '6.0-focal'                 = 'debian'  #ubuntu 20.04 LTS
+    '6.0-jammy'                 = 'debian'  #ubuntu 22.04 LTS
+    '7.0-alpine'                = 'alpine'
+    '7.0-bullseye-slim'         = 'debian'
+    '7.0-jammy'                 = 'debian'  #ubuntu 22.04 LTS
+    '8.0-preview-alpine'        = 'alpine'
+    '8.0-preview-bookworm-slim' = 'debian'
+    '8.0-preview-jammy'         = 'debian'  #ubuntu 22.04 LTS
 }
 
 function getMajorSdk($imageTag) {
