@@ -10,7 +10,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image-tag: [alpine3.17, bookworm-slim, bullseye-slim, focal, jammy]
+        image-tag:
+          [
+            alpine3.17,
+            bookworm-slim,
+            bullseye-slim,
+            focal,
+            jammy,
+            jammy-chiseled,
+          ]
     name: ${{ matrix.image-tag }}
     runs-on: ubuntu-latest
     env:
@@ -47,11 +55,11 @@ jobs:
         run: echo "SKIP_DOCKER=true" >> $GITHUB_ENV
 
       - name: Skip docker build .NET 7.0
-        if: ${{ (matrix.image-tag == 'bookworm-slim' || matrix.image-tag == 'focal') && startsWith(env.ASPNET_VERSION, '7.') }}
+        if: ${{ (matrix.image-tag == 'bookworm-slim' || matrix.image-tag == 'focal' || matrix.image-tag == 'jammy-chiseled') && startsWith(env.ASPNET_VERSION, '7.') }}
         run: echo "SKIP_DOCKER=true" >> $GITHUB_ENV
 
       - name: Skip docker build .NET 6.0
-        if: ${{ matrix.image-tag == 'bookworm-slim' && startsWith(env.ASPNET_VERSION, '6.') }}
+        if: ${{ (matrix.image-tag == 'bookworm-slim' || matrix.image-tag == 'jammy-chiseled') && startsWith(env.ASPNET_VERSION, '6.') }}
         run: echo "SKIP_DOCKER=true" >> $GITHUB_ENV
 
       - uses: actions/checkout@v2
