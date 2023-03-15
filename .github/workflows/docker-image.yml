@@ -30,8 +30,7 @@ jobs:
               echo "Update ASPNET_VERSION to ${{ github.ref_name }}"
             fi
           else
-            ASPNET_VER=$( [ '${{ matrix.image-tag }}' == 'focal' ] && ( echo '6.0' ) || ( echo '7.0' ) )
-            ASPNET_VER=$( [ '${{ matrix.image-tag }}' == 'bookworm-slim' ] && ( echo '8.0-preview' ) || ( echo '7.0' ) )
+            ASPNET_VER=$( [ '${{ matrix.image-tag }}' == 'bookworm-slim' ] && ( echo '8.0-preview' ) || [ '${{ matrix.image-tag }}' == 'focal' ] && ( echo '6.0' ) || ( echo '7.0' ) )
             ASPNET_VERSION=$(docker run --rm mcr.microsoft.com/dotnet/aspnet:$ASPNET_VER-${{ matrix.image-tag }} sh -c 'echo $ASPNET_VERSION')
             echo "ASPNET_VERSION=$ASPNET_VERSION" >> $GITHUB_ENV
             echo "Update ASPNET_VERSION to $ASPNET_VERSION"
