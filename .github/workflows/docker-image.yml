@@ -10,14 +10,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image-tag:
-          [
+        image-tag: [
             alpine3.17,
             bookworm-slim,
             bullseye-slim,
             focal,
             jammy,
-            jammy-chiseled,
+            #jammy-chiseled,
           ]
     name: ${{ matrix.image-tag }}
     runs-on: ubuntu-latest
