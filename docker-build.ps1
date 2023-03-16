@@ -90,7 +90,7 @@ foreach ($dockerRepos in $dockerRepository) {
 }
 
 $sourceImageTag = $imageTag
-if ($imageTagMajor -match '^8\.0\.0-(preview|rc)') {
+if ($imageTagMajor -match '^8\.0(\.0)?-(preview|rc)') {
     $sourceImageTag = $imageTagMajor
 }
 
