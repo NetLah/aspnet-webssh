@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: ["main", "dev*", "fix*"]
+    branches: ["main", "dev*", "dev/*", "fix*", "fix/*"]
     tags: ["*.*.*"]
 
 jobs:
