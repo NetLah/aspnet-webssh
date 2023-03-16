@@ -1,5 +1,5 @@
-ARG SDK_IMAGE_TAG=6.0-alpine
-FROM mcr.microsoft.com/dotnet/aspnet:${SDK_IMAGE_TAG} AS base
+ARG IMAGE_TAG=6.0-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:${IMAGE_TAG} AS base
 
 # Sample dotnet Alpine with ICU https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.alpine-x64#L20
 ENV SSH_PORT=2222 \
