@@ -17,10 +17,16 @@ https://github.com/NetLah/aspnet-webssh
 
 ## Run example ASP.NET Core container with WebSSH support
 
-- Run with WebSSH support, using `STARTCOMMAND` for original entrypoint.
+- Run with WebSSH support, using `STARTCOMMAND` environment for original entrypoint.
 
 ```
-docker run -it --rm --name aspnetssh --entrypoint /opt/startup/init_container.sh -e "STARTUPCOMMAND=dotnet WebApp.dll" -p 5002:80 -p 2222:2222 -e TZ=Asia/Singapore netlah/spa-host:6.0-alpine
+docker run -it --rm --name aspnetssh --entrypoint /opt/startup/init_container.sh -e "STARTUPCOMMAND=exec dotnet WebApp.dll" -p 5002:80 -p 2222:2222 -e TZ=Asia/Singapore netlah/spa-host:6.0-alpine
+```
+
+- Run with WebSSH support, using command arguments for original entrypoint.
+
+```
+docker run -it --rm --name aspnetssh --entrypoint /opt/startup/init_container.sh -p 5002:80 -p 2222:2222 -e TZ=Asia/Singapore netlah/spa-host:6.0-alpine exec dotnet WebApp.dll
 ```
 
 Output
