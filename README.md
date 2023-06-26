@@ -6,6 +6,7 @@ A customized ASP.NET Core Runtime image supports Azure AppService Web SSH. Docke
 
 - ASP.NET Core 6.0, mcr.microsoft.com/dotnet/aspnet:6.0 tags: `6.0-alpine`, `6.0-bullseye-slim`, `6.0-focal`, `6.0-jammy`
 - ASP.NET Core 7.0, mcr.microsoft.com/dotnet/aspnet:7.0 tags: `7.0-alpine`, `7.0-bullseye-slim`, `7.0-jammy`
+- ASP.NET Core 8.0, mcr.microsoft.com/dotnet/aspnet:8.0 tags: `8.0-alpine`, `8.0-bookworm-slim`, `8.0-jammy`
 
 ## Github source
 
