@@ -52,7 +52,7 @@ jobs:
             echo "Update ASPNET_VERSION to $ASPNET_VERSION"
           fi
 
-      - name: Skip docker build .NET 8.0 alpine3.17
+      - name: Skip docker build .NET 8.0 alpine3.17 bullseye-slim focal
         if: ${{ (matrix.image-tag == 'alpine3.17' || matrix.image-tag == 'bullseye-slim' || matrix.image-tag == 'focal') && startsWith(env.ASPNET_VERSION, '8.') }}
         run: echo "SKIP_DOCKER=true" >> $GITHUB_ENV
 
