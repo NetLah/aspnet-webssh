@@ -90,9 +90,9 @@ foreach ($dockerRepos in $dockerRepository) {
 }
 
 $sourceImageTag = $imageTag
-if ($imageTagMajor -match '^8\.0(\.0)?-(preview|rc)') {
-    $sourceImageTag = $imageTagMajor
-}
+#if ($imageTagMajor -match '^8\.0(\.0)?-(preview|rc)') {
+#    $sourceImageTag = $imageTagMajor
+#}
 
 $params = @('build', "$Path/$imageArch", '--pull', '--build-arg', "IMAGE_TAG=$sourceImageTag", '--progress=plain')
 
