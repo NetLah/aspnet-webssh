@@ -8,31 +8,32 @@ param (
     [Parameter(Mandatory = $false)] [switch] $WhatIf
 )
 
-$mappingSdkMajor = @{
-    '^6\.0(\.\d+)?-alpine(.*)$'                     = '6.0-alpine'
-    '^6\.0(\.\d+)?-bullseye-slim$'                  = '6.0-bullseye-slim'
-    '^6\.0(\.\d+)?-focal$'                          = '6.0-focal'
-    '^6\.0(\.\d+)?-jammy$'                          = '6.0-jammy'
+$mappingVersionArch = @{
+    '^6\.0(\.\d+)?-alpine(.*)$'             = '6.0-alpine', '6.0'
+    '^6\.0(\.\d+)?-bullseye-slim$'          = '6.0-bullseye-slim', '6.0', 'bullseye-slim'
+    '^6\.0(\.\d+)?-focal$'                  = '6.0-focal', '6.0', 'focal'
+    '^6\.0(\.\d+)?-jammy$'                  = '6.0-jammy', '6.0', 'jammy'
 
-    '^7\.0(\.\d+)?-alpine(.*)$'                     = '7.0-alpine'
-    '^7\.0(\.\d+)?-bullseye-slim$'                  = '7.0-bullseye-slim'
-    '^7\.0(\.\d+)?-jammy$'                          = '7.0-jammy'
+    '^7\.0(\.\d+)?-alpine(.*)$'             = '7.0-alpine', '7.0'
+    '^7\.0(\.\d+)?-bullseye-slim$'          = '7.0-bullseye-slim', '7.0', 'bullseye-slim'
+    '^7\.0(\.\d+)?-jammy$'                  = '7.0-jammy', '7.0', 'jammy'
 
-    '^8\.0(\.\d+(-preview[^-]+)?)?-alpine(.*)$'     = '8.0-preview-alpine'
-    '^8\.0(\.\d+(-preview[^-]+)?)?-bookworm-slim$'  = '8.0-preview-bookworm-slim'
-    '^8\.0(\.\d+(-preview[^-]+)?)?-jammy$'          = '8.0-preview-jammy'
-    '^8\.0(\.\d+(-preview[^-]+)?)?-jammy-chiseled$' = '8.0-preview-jammy-chiseled'
+    '^8\.0\.0-preview[^-]+-alpine(.*)$'     = '8.0-preview-alpine', '8.0-alpine', '8.0'
+    '^8\.0\.0-preview[^-]+-bookworm-slim$'  = '8.0-preview-bookworm-slim', '8.0-preview', '8.0', 'preview-bookworm-slim', 'bookworm-slim'
+    '^8\.0\.0-preview[^-]+-jammy$'          = '8.0-preview-jammy', '8.0-preview', '8.0', 'jammy'
+    '^8\.0\.0-preview[^-]+-jammy-chiseled$' = '8.0-preview-jammy-chiseled', '8.0-jammy-chiseled', 'jammy-chiseled'
     
-    '^8\.0(\.\d+(-rc[^-]+)?)?-alpine(.*)$'          = '8.0-rc-alpine'
-    '^8\.0(\.\d+(-rc[^-]+)?)?-bookworm-slim$'       = '8.0-rc-bookworm-slim'
-    '^8\.0(\.\d+(-rc[^-]+)?)?-jammy$'               = '8.0-rc-jammy'
-    '^8\.0(\.\d+(-rc[^-]+)?)?-jammy-chiseled$'      = '8.0-rc-jammy-chiseled'
+    '^8\.0\.0-rc[^-]+-alpine(.*)$'          = '8.0-rc-alpine', '8.0-alpine', '8.0'
+    '^8\.0\.0-rc[^-]+-bookworm-slim$'       = '8.0-rc-bookworm-slim', '8.0-rc', '8.0', 'bookworm-slim'
+    '^8\.0\.0-rc[^-]+-jammy$'               = '8.0-rc-jammy', '8.0-rc', '8.0', 'jammy'
+    '^8\.0\.0-rc[^-]+-jammy-chiseled$'      = '8.0-rc-jammy-chiseled', '8.0-jammy-chiseled', 'jammy-chiseled'
     
-    '^8\.0(\.\d+)?-alpine(.*)$'                     = '8.0-alpine'
-    '^8\.0(\.\d+)?-bookworm-slim$'                  = '8.0-bookworm-slim'
-    '^8\.0(\.\d+)?-jammy$'                          = '8.0-jammy'
-    '^8\.0(\.\d+)?-jammy-chiseled$'                 = '8.0-jammy-chiseled'
+    '^8\.0(\.\d+)?-alpine(.*)$'             = '8.0-alpine', '8.0'
+    '^8\.0(\.\d+)?-bookworm-slim$'          = '8.0-bookworm-slim', '8.0', 'bookworm-slim'
+    '^8\.0(\.\d+)?-jammy$'                  = '8.0-jammy', '8.0', 'jammy'
+    '^8\.0(\.\d+)?-jammy-chiseled$'         = '8.0-jammy-chiseled', 'jammy-chiseled'
 }
+
 $latestTag = '6.0-alpine'
 
 # sdkMajor mappings arch
@@ -58,15 +59,17 @@ $mappingArch = @{
     '8.0-jammy-chiseled'         = 'debian'  #ubuntu 22.04 LTS
 }
 
-function getMajorSdk($imageTag) {
-    foreach ($entry in $mappingSdkMajor.GetEnumerator()) {
+function getVersionArch($imageTag) {
+    foreach ($entry in $mappingVersionArch.GetEnumerator()) {
         if ($imageTag -match $entry.Key) {
-            return $entry.Value
+            return [string[]] $entry.Value
         }
     } 
 }
 
-$imageTagMajor = getMajorSdk $imageTag
+$versionArches = getVersionArch $imageTag
+
+$imageTagMajor = $versionArches | Select-Object -Index 0
 if ($imageTagMajor) {
     $imageArch = $mappingArch[$imageTagMajor]
 }
@@ -91,7 +94,16 @@ foreach ($dockerRepos in $dockerRepository) {
 
 $sourceImageTag = $imageTag
 
-$params = @('build', "$Path/$imageArch", '--pull', '--build-arg', "IMAGE_TAG=$sourceImageTag", '--progress=plain')
+$params = @('build', "$Path/$imageArch")
+
+foreach ($dockerFile in $versionArches | ForEach-Object { "Dockerfile-$($_)" }) {
+    if (Test-Path -Path $dockerFile -PathType Leaf) {
+        $params += @('--file', $dockerFile)
+        break
+    }
+}
+
+$params += @('--pull', '--build-arg', "IMAGE_TAG=$sourceImageTag", '--progress=plain')
 
 if ($Squash -And !($Env:OS)) {
     $params += @('--squash')
