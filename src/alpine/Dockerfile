@@ -5,7 +5,9 @@ FROM mcr.microsoft.com/dotnet/aspnet:${IMAGE_TAG} AS base
 ENV SSH_PORT=2222 \
     TZ=UTC \
     LC_ALL=en_US.UTF-8 \
-    LANG=en_US.UTF-8
+    LANG=en_US.UTF-8 \
+    APPUSER_UID=1000 \
+    APP_UID=1654
 
 # Copy files in structure /etc/ssh/sshd_config, /opt/startup/init_container.sh /tmp/ssh_setup.sh
 COPY src/ /
@@ -18,4 +20,20 @@ RUN apk add --no-cache openssh tzdata icu-data-full icu-libs \
     && echo "root:Docker!" | chpasswd \
     && chmod -R +x /opt/startup \
     && (sleep 1;/opt/startup/ssh_setup.sh 2>&1 > /dev/null) \
-    && rm -rf /tmp/*
+    && rm -rf /tmp/* \
+    && addgroup \
+    --gid=$APPUSER_UID \
+    appuser \
+    && adduser \
+    --uid=$APPUSER_UID \
+    --ingroup=appuser \
+    --disabled-password \
+    appuser \
+    && addgroup \
+    --gid=$APP_UID \
+    app \
+    && adduser \
+    --uid=$APP_UID \
+    --ingroup=app \
+    --disabled-password \
+    app
