@@ -33,13 +33,14 @@ jobs:
       ASPNET_VERSION: ${{ matrix.image.ver }}
       IMAGE_TAG: ${{ matrix.image.ver }}-${{ matrix.image.arch }}
       SKIP_DOCKER: "false"
+      IS_TAG: ${{ startsWith(github.ref, 'refs/tags/') }}
       IS_SEMVER_TAG: "false"
     steps:
       - name: Check Tag Ref
         run: |
           SKIP_DOCKER=${{ env.SKIP_DOCKER }}
           IS_SEMVER_TAG=${{ env.IS_SEMVER_TAG }}
-          IS_TAG=${{ startsWith(github.ref, 'refs/tags/') }}
+          IS_TAG=${{ env.IS_TAG }}
 
           if [ "$IS_TAG" == 'true' ]; then          
             if [[ '${{ github.ref_name }}' =~ ^([0-9]+\.[0-9]+(\.[0-9]+)?(-.+)?)$ ]]; then
@@ -121,7 +122,7 @@ jobs:
         if: ${{ success() && env.SKIP_DOCKER != 'true' && github.event_name != 'pull_request' }}
         shell: pwsh
         run: |
-          if ('${{ env.IS_SEMVER_TAG }}' -eq $true) { $repos += @('netlah/aspnet-webssh') }
+          if ('${{ env.IS_TAG }}' -eq $true) { $repos += @('netlah/aspnet-webssh') }
           $repos += @('${{ secrets.DOCKER_HUB_REPOS }}')
           ./docker-build.ps1 -imageTag ${{ env.IMAGE_TAG }} -dockerRepository $repos -Squash -Labels $(@'
           ${{ steps.meta.outputs.labels }}
