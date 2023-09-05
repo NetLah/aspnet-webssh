@@ -49,7 +49,7 @@ jobs:
           $tokens = $tagRaw -split '_'
           foreach($token in $tokens) {
             $isMatchVersion = $token.Contains('${{ matrix.image.ver }}')
-            $pattern = '^(?<version>\d+\.\d+(\.\d+)?)(-(?<preview>[a-zA-Z.]+[\-\.]?\d+)([\-\.].*)?)?$'
+            $pattern = '^(?<version>\d+\.\d+(\.\d+)?)(-(?<preview>[a-zA-Z.]+([\-\.]?\d+)?)([\-\.].*)?)?$'
             if (!$isMatchVersion) {
               if ($token -match $pattern -And '${{ matrix.image.ver }}' -match $pattern) {
                 $configVersion = '${{ matrix.image.ver }}' -replace $pattern,'${version}'
@@ -108,7 +108,7 @@ jobs:
         run: |
           $aspnetVersion = '${{ env.ASPNET_VERSION }}'
           # 8.0.0-preview.7.23375.9
-          $pattern = '^(?<version>\d+\.\d+(\.\d+)?)(-(?<preview>[a-zA-Z.]+[\-\.]?\d+)([\-\.].*)?)?$'
+          $pattern = '^(?<version>\d+\.\d+(\.\d+)?)(-(?<preview>[a-zA-Z.]+([\-\.]?\d+)?)([\-\.].*)?)?$'
           if ($aspnetVersion -match $pattern) {
             $newVersionImageTag = $aspnetVersion -replace $pattern,'${version}-${preview}'
             $newImageTag = "$newVersionImageTag-${{ matrix.image.arch }}"
