@@ -81,7 +81,7 @@ jobs:
               IS_SEMVER_TAG=true
               echo "IS_SEMVER_TAG=$IS_SEMVER_TAG" >> $GITHUB_ENV
 
-              if [ '${{ github.ref_name }}' != *'${{ matrix.image.matching }}'* ]; then
+              if [[ '${{ github.ref_name }}' != *'${{ matrix.image.matching }}'* ]]; then
                 SKIP_DOCKER=true
                 echo "SKIP_DOCKER=$SKIP_DOCKER" >> $GITHUB_ENV
                 echo "Disable docker build for SemVer config ${{ matrix.image.ver }} on ${{ github.ref_name }}"
