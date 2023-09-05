@@ -35,8 +35,26 @@ jobs:
       SKIP_DOCKER: "false"
       IS_TAG: ${{ startsWith(github.ref, 'refs/tags/') }}
       IS_SEMVER_TAG: "false"
+      IS_MULTI_RELEASE: "false"
     steps:
+      
+      - name: Check Tag Ref Multi
+        if: ${{ env.IS_TAG == 'true' && startsWith(github.ref_name, 'release_') }}
+        shell: pwsh
+        run: |
+          $tagRaw = '${{ github.ref_name }}'.Substring('release_'.Length)
+          $tokens = $tagRaw -split '_'
+          foreach($token in $tokens) {
+            if ($token.Contains('${{ matrix.image.ver }}')) {
+              "IS_MULTI_RELEASE=true" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+              "IS_SEMVER_TAG=true" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+              "ASPNET_VERSION=$token" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+              "IMAGE_TAG=$token-${{ matrix.image.arch }}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+            }
+          }
+
       - name: Check Tag Ref
+        if: ${{ success() && env.IS_MULTI_RELEASE != 'true' }}
         run: |
           SKIP_DOCKER=${{ env.SKIP_DOCKER }}
           IS_SEMVER_TAG=${{ env.IS_SEMVER_TAG }}
@@ -122,7 +140,7 @@ jobs:
         if: ${{ success() && env.SKIP_DOCKER != 'true' && github.event_name != 'pull_request' }}
         shell: pwsh
         run: |
-          if ('${{ env.IS_TAG }}' -eq $true) { $repos += @('netlah/aspnet-webssh') }
+          if ('${{ env.IS_SEMVER_TAG }}' -eq $true) { $repos += @('netlah/aspnet-webssh') }
           $repos += @('${{ secrets.DOCKER_HUB_REPOS }}')
           ./docker-build.ps1 -imageTag ${{ env.IMAGE_TAG }} -dockerRepository $repos -Squash -Labels $(@'
           ${{ steps.meta.outputs.labels }}
