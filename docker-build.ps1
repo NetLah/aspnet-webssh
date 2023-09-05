@@ -100,7 +100,7 @@ $sourceImageTag = $imageTag
 
 $params = @('build', "$Path/$imageArch")
 
-foreach ($dockerFile in $versionArches | ForEach-Object { "Dockerfile-$($_)" }) {
+foreach ($dockerFile in $versionArches | ForEach-Object { "$Path/$imageArch/Dockerfile-$($_)" }) {
     if (Test-Path -Path $dockerFile -PathType Leaf) {
         $params += @('--file', $dockerFile)
         break
