@@ -26,14 +26,21 @@ $mappingVersionArch = @{
     '^8\.0\.0-preview[^-]+-jammy-chiseled$' = '8.0-preview-jammy-chiseled', '8.0-jammy-chiseled', 'jammy-chiseled'
     
     '^8\.0\.0-rc[^-]+-alpine(.*)$'          = '8.0-rc-alpine', '8.0-alpine', '8.0'
-    '^8\.0\.0-rc[^-]+-bookworm-slim$'       = '8.0-rc-bookworm-slim', '8.0-rc', '8.0', 'bookworm-slim'
-    '^8\.0\.0-rc[^-]+-jammy$'               = '8.0-rc-jammy', '8.0-rc', '8.0', 'jammy'
+    '^8\.0\.0-rc[^-]+-bookworm-slim$'       = '8.0-rc-bookworm-slim', '8.0-rc', '8.0-bookworm-slim', '8.0', 'bookworm-slim'
+    '^8\.0\.0-rc[^-]+-jammy$'               = '8.0-rc-jammy', '8.0-rc', '8.0-jammy', '8.0', 'jammy'
     '^8\.0\.0-rc[^-]+-jammy-chiseled$'      = '8.0-rc-jammy-chiseled', '8.0-jammy-chiseled', 'jammy-chiseled'
     
     '^8\.0(\.\d+)?-alpine(.*)$'             = '8.0-alpine', '8.0'
     '^8\.0(\.\d+)?-bookworm-slim$'          = '8.0-bookworm-slim', '8.0', 'bookworm-slim'
     '^8\.0(\.\d+)?-jammy$'                  = '8.0-jammy', '8.0', 'jammy'
     '^8\.0(\.\d+)?-jammy-chiseled$'         = '8.0-jammy-chiseled', 'jammy-chiseled'
+}
+
+$mappingMajorRc = @{
+    '^8\.0\.0-rc[^-]+-alpine(.*)$'     = '8.0-alpine'
+    '^8\.0\.0-rc[^-]+-bookworm-slim$'  = '8.0-bookworm-slim'
+    '^8\.0\.0-rc[^-]+-jammy$'          = '8.0-jammy'
+    '^8\.0\.0-rc[^-]+-jammy-chiseled$' = '8.0-jammy-chiseled'
 }
 
 $latestTag = '6.0-alpine'
@@ -71,12 +78,23 @@ function getVersionArch($imageTag) {
     } 
 }
 
+function getMajorRc($imageTag) {
+    foreach ($entry in $mappingMajorRc.GetEnumerator()) {
+        if ($imageTag -match $entry.Key) {
+            return [string] $entry.Value
+        }
+    } 
+}
+
+
 $versionArches = getVersionArch $imageTag
 
 $imageTagMajor = $versionArches | Select-Object -Index 0
 if ($imageTagMajor) {
     $imageArch = $mappingArch[$imageTagMajor]
 }
+
+$imageTagMajorRc = getMajorRc $imageTag
 
 if (!$imageTag -or !$imageTagMajor -or !$imageArch) {
     Write-Error "SDK Image Tag '$imageTag' is not supported" -ErrorAction Stop
@@ -90,6 +108,9 @@ foreach ($dockerRepos in $dockerRepository) {
     $dockerImages += @("$($dockerRepos):$($imageTag)")
     if ($imageTag -ne $imageTagMajor) {
         $dockerImages += @("$($dockerRepos):$($imageTagMajor)")
+    }
+    if ($imageTagMajorRc -and $imageTag -ne $imageTagMajorRc) {
+        $dockerImages += @("$($dockerRepos):$($imageTagMajorRc)")
     }
     if ($latestTag -eq $imageTagMajor -or $latestTag -eq $imageTag) {
         $dockerImages += @("$($dockerRepos):latest")
