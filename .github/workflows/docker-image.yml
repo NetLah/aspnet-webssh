@@ -22,12 +22,18 @@ jobs:
             { ver: "7.0", arch: bullseye-slim, matching: "7.0" },
             { ver: "7.0", arch: bookworm-slim, matching: "7.0" },
             { ver: "7.0", arch: jammy, matching: "7.0" },
-            # { ver: 8.0-preview, arch: alpine3.18, matching: "8.0.0-preview" },
-            # { ver: 8.0-preview, arch: bookworm-slim, matching: "8.0.0-preview" },
-            # { ver: 8.0-preview, arch: jammy, matching: "8.0.0-preview" },
             { ver: "8.0", arch: alpine3.18, matching: "8.0" },
+            { ver: "8.0", arch: alpine3.19, matching: "8.0" },
             { ver: "8.0", arch: bookworm-slim, matching: "8.0" },
             { ver: "8.0", arch: jammy, matching: "8.0" },
+            # { ver: 8.0-preview, arch: jammy-chiseled, matching: "8.0.0-preview" },
+            { ver: 9.0-preview, arch: alpine3.19, matching: "9.0.0-preview" },
+            {
+              ver: 9.0-preview,
+              arch: bookworm-slim,
+              matching: "9.0.0-preview",
+            },
+            { ver: 9.0-preview, arch: jammy, matching: "9.0.0-preview" },
             # { ver: 8.0-preview, arch: jammy-chiseled, matching: "8.0.0-preview" },
           ]
     name: ${{ matrix.image.ver }}-${{ matrix.image.arch }}
