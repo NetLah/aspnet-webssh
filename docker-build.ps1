@@ -4,6 +4,7 @@ param (
     [Parameter(Mandatory = $false)] [string] $Path = 'src',   
     [Parameter(Mandatory = $false)] [string[]] $dockerRepository = @('netlah/aspnet-webssh'),
     [Parameter(Mandatory = $false)] [string] $Labels,
+    [Parameter(Mandatory = $false)] [string] $Tags,
     [Parameter(Mandatory = $false)] [switch] $Squash,
     [Parameter(Mandatory = $false)] [switch] $WhatIf
 )
@@ -51,24 +52,6 @@ $mappingVersionArch = @{
     '^9\.0(\.\d+)?-jammy-chiseled$'              = '9.0-jammy-chiseled', 'jammy-chiseled'
 }
 
-$mappingMajorRc = @{
-    '^8\.0\.0-rc[^-]+-alpine(.*)$'               = '8.0-alpine'
-    '^8\.0\.0-rc[^-]+-bookworm-slim$'            = '8.0-bookworm-slim'
-    '^8\.0\.0-rc[^-]+-jammy$'                    = '8.0-jammy'
-    '^8\.0\.0-rc[^-]+-jammy-chiseled$'           = '8.0-jammy-chiseled'
-    
-    '^9\.0(\.\d+)?-preview[^-]*-alpine(.*)$'     = '9.0-alpine'
-    '^9\.0(\.\d+)?-preview[^-]*-bookworm-slim$'  = '9.0-bookworm-slim'
-    '^9\.0(\.\d+)?-preview[^-]*-jammy$'          = '9.0-jammy'
-    '^9\.0(\.\d+)?-preview[^-]*-jammy-chiseled$' = '9.0-jammy-chiseled'
-    
-    '^9\.0(\.\d+)?-rc[^-]*-alpine(.*)$'          = '9.0-alpine'
-    '^9\.0(\.\d+)?-rc[^-]*-bookworm-slim$'       = '9.0-bookworm-slim'
-    '^9\.0(\.\d+)?-rc[^-]*-jammy$'               = '9.0-jammy'
-    '^9\.0(\.\d+)?-rc[^-]*-jammy-chiseled$'      = '9.0-jammy-chiseled'
-}
-
-$latestTag = '6.0-alpine'
 
 # sdkMajor mappings arch
 $mappingArch = @{
@@ -107,31 +90,22 @@ $mappingArch = @{
     '9.0-jammy-chiseled'         = 'debian'  #ubuntu 22.04 LTS
 }
 
-function getVersionArch($imageTag) {
-    foreach ($entry in $mappingVersionArch.GetEnumerator()) {
-        if ($imageTag -match $entry.Key) {
-            return [string[]] $entry.Value
-        }
-    } 
+function private:AddDockerImage($image) {
+    if ($image -And !($script:dockerImages -Contains $image)) {
+        $script:dockerImages += @($image)
+    }
 }
 
-function getMajorRc($imageTag) {
-    foreach ($entry in $mappingMajorRc.GetEnumerator()) {
-        if ($imageTag -match $entry.Key) {
-            return [string] $entry.Value
-        }
-    } 
-}
-
-
-$versionArches = getVersionArch $imageTag
+foreach ($entry in $mappingVersionArch.GetEnumerator()) {
+    if ($imageTag -match $entry.Key) {
+        $versionArches = [string[]] $entry.Value
+    }
+} 
 
 $imageTagMajor = $versionArches | Select-Object -Index 0
 if ($imageTagMajor) {
     $imageArch = $mappingArch[$imageTagMajor]
 }
-
-$imageTagMajorRc = getMajorRc $imageTag
 
 if (!$imageTag -or !$imageTagMajor -or !$imageArch) {
     Write-Error "SDK Image Tag '$imageTag' is not supported" -ErrorAction Stop
@@ -139,18 +113,13 @@ if (!$imageTag -or !$imageTagMajor -or !$imageArch) {
 
 Write-Output "Labels (raw): $Labels"
 $labelStrs = $Labels.Trim() -split '\r|\n|;|,' | Where-Object { $_ }
+$tagStrs = $Tags.Trim() -split '\r|\n|;|,' | Where-Object { $_ }
 
 $dockerImages = @()
 foreach ($dockerRepos in $dockerRepository) {
-    $dockerImages += @("$($dockerRepos):$($imageTag)")
-    if ($imageTag -ne $imageTagMajor) {
-        $dockerImages += @("$($dockerRepos):$($imageTagMajor)")
-    }
-    if ($imageTagMajorRc -and $imageTag -ne $imageTagMajorRc) {
-        $dockerImages += @("$($dockerRepos):$($imageTagMajorRc)")
-    }
-    if ($latestTag -eq $imageTagMajor -or $latestTag -eq $imageTag) {
-        $dockerImages += @("$($dockerRepos):latest")
+    AddDockerImage "$($dockerRepos):$($imageTag)"
+    foreach ($tag1 in $tagStrs) {
+        AddDockerImage "$($dockerRepos):$($tag1)"
     }
 }
 
