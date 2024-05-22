@@ -89,19 +89,19 @@ jobs:
               ver: 9.0-preview,
               arch: alpine3.19,
               matching: "9.0.0-preview",
-              tags: "9.0-alpine,9.0-alpine3.19",
+              tags: "9.0-alpine,9.0-preview-alpine,9.0-preview,9.0-alpine3.19,9.0",
             },
             {
               ver: 9.0-preview,
               arch: bookworm-slim,
               matching: "9.0.0-preview",
-              tags: "9.0-bookworm-slim",
+              tags: "9.0-preview-bookworm-slim,9.0-bookworm-slim",
             },
             {
               ver: 9.0-preview,
               arch: noble,
               matching: "9.0.0-preview",
-              tags: "9.0-noble",
+              tags: "9.0-preview-noble,9.0-noble",
             },
           ]
     name: ${{ matrix.image.ver }}-${{ matrix.image.arch }}
