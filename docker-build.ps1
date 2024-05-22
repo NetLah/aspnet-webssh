@@ -35,21 +35,23 @@ $mappingVersionArch = @{
     '^8\.0(\.\d+)?-bookworm-slim$'               = '8.0-bookworm-slim', '8.0', 'bookworm-slim'
     '^8\.0(\.\d+)?-jammy$'                       = '8.0-jammy', '8.0', 'jammy'
     '^8\.0(\.\d+)?-jammy-chiseled$'              = '8.0-jammy-chiseled', 'jammy-chiseled'
+    '^8\.0(\.\d+)?-noble$'                       = '8.0-noble', '8.0', 'noble'
+    '^8\.0(\.\d+)?-noble-chiseled$'              = '8.0-noble-chiseled', 'noble-chiseled'
     
     '^9\.0(\.\d+)?-preview[^-]*-alpine(.*)$'     = '9.0-preview-alpine', '9.0-alpine', '9.0'
     '^9\.0(\.\d+)?-preview[^-]*-bookworm-slim$'  = '9.0-preview-bookworm-slim', '9.0-preview', '9.0', 'preview-bookworm-slim', 'bookworm-slim'
-    '^9\.0(\.\d+)?-preview[^-]*-jammy$'          = '9.0-preview-jammy', '9.0-preview', '9.0', 'jammy'
-    '^9\.0(\.\d+)?-preview[^-]*-jammy-chiseled$' = '9.0-preview-jammy-chiseled', '9.0-jammy-chiseled', 'jammy-chiseled'
+    '^9\.0(\.\d+)?-preview[^-]*-noble$'          = '9.0-preview-noble', '9.0-preview', '9.0', 'noble'
+    '^9\.0(\.\d+)?-preview[^-]*-noble-chiseled$' = '9.0-preview-noble-chiseled', '9.0-preview', '9.0-noble-chiseled', 'noble-chiseled'
     
     '^9\.0(\.\d+)?-rc[^-]*-alpine(.*)$'          = '9.0-rc-alpine', '9.0-alpine', '9.0'
     '^9\.0(\.\d+)?-rc[^-]*-bookworm-slim$'       = '9.0-rc-bookworm-slim', '9.0-rc', '9.0-bookworm-slim', '9.0', 'bookworm-slim'
-    '^9\.0(\.\d+)?-rc[^-]*-jammy$'               = '9.0-rc-jammy', '9.0-rc', '9.0-jammy', '9.0', 'jammy'
-    '^9\.0(\.\d+)?-rc[^-]*-jammy-chiseled$'      = '9.0-rc-jammy-chiseled', '9.0-jammy-chiseled', 'jammy-chiseled'
+    '^9\.0(\.\d+)?-rc[^-]*-noble$'               = '9.0-rc-noble', '9.0-rc', '9.0-noble', '9.0', 'noble'
+    '^9\.0(\.\d+)?-rc[^-]*-noble-chiseled$'      = '9.0-rc-noble-chiseled', '9.0-noble-chiseled', 'noble-chiseled'
     
     '^9\.0(\.\d+)?-alpine(.*)$'                  = '9.0-alpine', '9.0'
     '^9\.0(\.\d+)?-bookworm-slim$'               = '9.0-bookworm-slim', '9.0', 'bookworm-slim'
-    '^9\.0(\.\d+)?-jammy$'                       = '9.0-jammy', '9.0', 'jammy'
-    '^9\.0(\.\d+)?-jammy-chiseled$'              = '9.0-jammy-chiseled', 'jammy-chiseled'
+    '^9\.0(\.\d+)?-noble$'                       = '9.0-noble', '9.0', 'noble'
+    '^9\.0(\.\d+)?-noble-chiseled$'              = '9.0-noble-chiseled', 'noble-chiseled'
 }
 
 
@@ -76,18 +78,21 @@ $mappingArch = @{
     '8.0-bookworm-slim'          = 'debian'
     '8.0-jammy'                  = 'debian'  #ubuntu 22.04 LTS
     '8.0-jammy-chiseled'         = 'debian'  #ubuntu 22.04 LTS
+    '8.0-noble'                  = 'debian'  #ubuntu 24.04 LTS
+    '8.0-noble-chiseled'         = 'debian'  #ubuntu 24.04 LTS
+    '8.0-noble-chiseled-extra'   = 'debian'  #ubuntu 24.04 LTS
     '9.0-preview-alpine'         = 'alpine'
     '9.0-preview-bookworm-slim'  = 'debian'
-    '9.0-preview-jammy'          = 'debian'  #ubuntu 22.04 LTS
-    '9.0-preview-jammy-chiseled' = 'debian'  #ubuntu 22.04 LTS
+    '9.0-preview-noble'          = 'debian'  #ubuntu 22.04 LTS
+    '9.0-preview-noble-chiseled' = 'debian'  #ubuntu 22.04 LTS
     '9.0-rc-alpine'              = 'alpine'
     '9.0-rc-bookworm-slim'       = 'debian'
-    '9.0-rc-jammy'               = 'debian'  #ubuntu 22.04 LTS
-    '9.0-rc-jammy-chiseled'      = 'debian'  #ubuntu 22.04 LTS
+    '9.0-rc-noble'               = 'debian'  #ubuntu 22.04 LTS
+    '9.0-rc-noble-chiseled'      = 'debian'  #ubuntu 22.04 LTS
     '9.0-alpine'                 = 'alpine'
     '9.0-bookworm-slim'          = 'debian'
-    '9.0-jammy'                  = 'debian'  #ubuntu 22.04 LTS
-    '9.0-jammy-chiseled'         = 'debian'  #ubuntu 22.04 LTS
+    '9.0-noble'                  = 'debian'  #ubuntu 24.04 LTS
+    '9.0-noble-chiseled'         = 'debian'  #ubuntu 24.04 LTS
 }
 
 function private:AddDockerImage($image) {
