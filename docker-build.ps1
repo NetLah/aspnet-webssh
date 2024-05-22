@@ -40,12 +40,12 @@ $mappingVersionArch = @{
     
     '^9\.0(\.\d+)?-preview[^-]*-alpine(.*)$'     = '9.0-preview-alpine', '9.0-alpine', '9.0'
     '^9\.0(\.\d+)?-preview[^-]*-bookworm-slim$'  = '9.0-preview-bookworm-slim', '9.0-preview', '9.0', 'preview-bookworm-slim', 'bookworm-slim'
-    '^9\.0(\.\d+)?-preview[^-]*-noble$'          = '9.0-preview-noble', '9.0-preview', '9.0', 'noble'
-    '^9\.0(\.\d+)?-preview[^-]*-noble-chiseled$' = '9.0-preview-noble-chiseled', '9.0-preview', '9.0-noble-chiseled', 'noble-chiseled'
+    '^9\.0(\.\d+)?-preview[^-]*-noble$'          = '9.0-preview-noble', '9.0-noble', '9.0-preview', '9.0', 'noble'
+    '^9\.0(\.\d+)?-preview[^-]*-noble-chiseled$' = '9.0-preview-noble-chiseled', '9.0-noble-chiseled', '9.0-preview', 'noble-chiseled'
     
     '^9\.0(\.\d+)?-rc[^-]*-alpine(.*)$'          = '9.0-rc-alpine', '9.0-alpine', '9.0'
-    '^9\.0(\.\d+)?-rc[^-]*-bookworm-slim$'       = '9.0-rc-bookworm-slim', '9.0-rc', '9.0-bookworm-slim', '9.0', 'bookworm-slim'
-    '^9\.0(\.\d+)?-rc[^-]*-noble$'               = '9.0-rc-noble', '9.0-rc', '9.0-noble', '9.0', 'noble'
+    '^9\.0(\.\d+)?-rc[^-]*-bookworm-slim$'       = '9.0-rc-bookworm-slim', '9.0-bookworm-slim', '9.0-rc', '9.0', 'bookworm-slim'
+    '^9\.0(\.\d+)?-rc[^-]*-noble$'               = '9.0-rc-noble', '9.0-noble', '9.0-rc', '9.0', 'noble'
     '^9\.0(\.\d+)?-rc[^-]*-noble-chiseled$'      = '9.0-rc-noble-chiseled', '9.0-noble-chiseled', 'noble-chiseled'
     
     '^9\.0(\.\d+)?-alpine(.*)$'                  = '9.0-alpine', '9.0'
