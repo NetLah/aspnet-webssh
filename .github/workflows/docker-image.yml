@@ -66,15 +66,15 @@ jobs:
             { ver: "7.0", arch: jammy, matching: "7.0", tags: "7.0-jammy" },
             {
               ver: "8.0",
-              arch: alpine3.18,
+              arch: alpine3.19,
               matching: "8.0",
-              tags: "8.0-alpine3.18",
+              tags: "8.0-alpine3.19",
             },
             {
               ver: "8.0",
-              arch: alpine3.19,
+              arch: alpine3.20,
               matching: "8.0",
-              tags: "8.0-alpine,8.0-alpine3.19",
+              tags: "8.0-alpine,8.0-alpine3.20",
             },
             {
               ver: "8.0",
