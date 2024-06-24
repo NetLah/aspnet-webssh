@@ -87,9 +87,9 @@ jobs:
             # { ver: 8.0-preview, arch: jammy-chiseled, matching: "8.0.0-preview" },
             {
               ver: 9.0-preview,
-              arch: alpine3.19,
+              arch: alpine3.20,
               matching: "9.0.0-preview",
-              tags: "9.0-alpine,9.0-preview-alpine,9.0-preview,9.0-alpine3.19,9.0",
+              tags: "9.0-alpine,9.0-preview-alpine,9.0-preview,9.0-alpine3.20,9.0",
             },
             {
               ver: 9.0-preview,
