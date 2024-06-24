@@ -14,15 +14,15 @@ jobs:
             # { ver: "6.0", arch: alpine3.17, matching: "6.0" },
             {
               ver: "6.0",
-              arch: alpine3.18,
+              arch: alpine3.19,
               matching: "6.0",
-              tags: "6.0-alpine3.18",
+              tags: "6.0-alpine3.19",
             },
             {
               ver: "6.0",
-              arch: alpine3.19,
+              arch: alpine3.20,
               matching: "6.0",
-              tags: "6.0-alpine3.19,6.0-alpine,latest",
+              tags: "6.0-alpine3.20,6.0-alpine,latest",
             },
             {
               ver: "6.0",
