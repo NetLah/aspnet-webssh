@@ -16,11 +16,6 @@ $mappingVersionArch = @{
     '^6\.0(\.\d+)?-focal$'                       = '6.0-focal', '6.0', 'focal'
     '^6\.0(\.\d+)?-jammy$'                       = '6.0-jammy', '6.0', 'jammy'
 
-    '^7\.0(\.\d+)?-alpine(.*)$'                  = '7.0-alpine', '7.0'
-    '^7\.0(\.\d+)?-bullseye-slim$'               = '7.0-bullseye-slim', '7.0', 'bullseye-slim'
-    '^7\.0(\.\d+)?-bookworm-slim$'               = '7.0-bookworm-slim', '7.0', 'bookworm-slim'
-    '^7\.0(\.\d+)?-jammy$'                       = '7.0-jammy', '7.0', 'jammy'
-
     '^8\.0\.0-preview[^-]+-alpine(.*)$'          = '8.0-preview-alpine', '8.0-alpine', '8.0'
     '^8\.0\.0-preview[^-]+-bookworm-slim$'       = '8.0-preview-bookworm-slim', '8.0-preview', '8.0', 'preview-bookworm-slim', 'bookworm-slim'
     '^8\.0\.0-preview[^-]+-jammy$'               = '8.0-preview-jammy', '8.0-preview', '8.0', 'jammy'
@@ -62,10 +57,6 @@ $mappingArch = @{
     '6.0-bookworm-slim'          = 'debian'
     '6.0-focal'                  = 'debian'  #ubuntu 20.04 LTS
     '6.0-jammy'                  = 'debian'  #ubuntu 22.04 LTS
-    '7.0-alpine'                 = 'alpine'
-    '7.0-bullseye-slim'          = 'debian'
-    '7.0-bookworm-slim'          = 'debian'
-    '7.0-jammy'                  = 'debian'  #ubuntu 22.04 LTS
     '8.0-preview-alpine'         = 'alpine'
     '8.0-preview-bookworm-slim'  = 'debian'
     '8.0-preview-jammy'          = 'debian'  #ubuntu 22.04 LTS

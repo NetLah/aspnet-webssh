@@ -38,32 +38,6 @@ jobs:
             },
             { ver: "6.0", arch: focal, matching: "6.0", tags: "6.0-focal" },
             { ver: "6.0", arch: jammy, matching: "6.0", tags: "6.0-jammy" },
-            # { ver: "7.0", arch: alpine3.17, matching: "7.0" },
-            {
-              ver: "7.0",
-              arch: alpine3.18,
-              matching: "7.0",
-              tags: "7.0-alpine3.18",
-            },
-            {
-              ver: "7.0",
-              arch: alpine3.19,
-              matching: "7.0",
-              tags: "7.0-alpine,7.0-alpine3.19",
-            },
-            {
-              ver: "7.0",
-              arch: bullseye-slim,
-              matching: "7.0",
-              tags: "7.0-bullseye-slim",
-            },
-            {
-              ver: "7.0",
-              arch: bookworm-slim,
-              matching: "7.0",
-              tags: "7.0-bookworm-slim",
-            },
-            { ver: "7.0", arch: jammy, matching: "7.0", tags: "7.0-jammy" },
             {
               ver: "8.0",
               arch: alpine3.19,
