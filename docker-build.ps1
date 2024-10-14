@@ -32,6 +32,7 @@ $mappingVersionArch = @{
     '^8\.0(\.\d+)?-jammy-chiseled$'              = '8.0-jammy-chiseled', 'jammy-chiseled'
     '^8\.0(\.\d+)?-noble$'                       = '8.0-noble', '8.0', 'noble'
     '^8\.0(\.\d+)?-noble-chiseled$'              = '8.0-noble-chiseled', 'noble-chiseled'
+    '^8\.0(\.\d+)?-azurelinux3.0$'               = '8.0-azurelinux3.0', '8.0', 'azurelinux3.0'
     
     '^9\.0(\.\d+)?-preview[^-]*-alpine(.*)$'     = '9.0-preview-alpine', '9.0-alpine', '9.0'
     '^9\.0(\.\d+)?-preview[^-]*-bookworm-slim$'  = '9.0-preview-bookworm-slim', '9.0-preview', '9.0', 'preview-bookworm-slim', 'bookworm-slim'
@@ -47,6 +48,7 @@ $mappingVersionArch = @{
     '^9\.0(\.\d+)?-bookworm-slim$'               = '9.0-bookworm-slim', '9.0', 'bookworm-slim'
     '^9\.0(\.\d+)?-noble$'                       = '9.0-noble', '9.0', 'noble'
     '^9\.0(\.\d+)?-noble-chiseled$'              = '9.0-noble-chiseled', 'noble-chiseled'
+    '^9\.0(\.\d+)?-azurelinux3.0$'               = '9.0-azurelinux3.0', '9.0', 'noble'
 }
 
 
