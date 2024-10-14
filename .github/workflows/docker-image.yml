@@ -11,13 +11,6 @@ jobs:
       fail-fast: false
       matrix:
         image: [
-            # { ver: "6.0", arch: alpine3.17, matching: "6.0" },
-            {
-              ver: "6.0",
-              arch: alpine3.19,
-              matching: "6.0",
-              tags: "6.0-alpine3.19",
-            },
             {
               ver: "6.0",
               arch: alpine3.20,
@@ -40,12 +33,6 @@ jobs:
             { ver: "6.0", arch: jammy, matching: "6.0", tags: "6.0-jammy" },
             {
               ver: "8.0",
-              arch: alpine3.19,
-              matching: "8.0",
-              tags: "8.0-alpine3.19",
-            },
-            {
-              ver: "8.0",
               arch: alpine3.20,
               matching: "8.0",
               tags: "8.0-alpine,8.0-alpine3.20",
@@ -58,25 +45,50 @@ jobs:
             },
             { ver: "8.0", arch: jammy, matching: "8.0", tags: "8.0-jammy" },
             { ver: "8.0", arch: noble, matching: "8.0", tags: "8.0-noble" },
+            # {
+            #   ver: "8.0",
+            #   arch: azurelinux3.0,
+            #   matching: "8.0",
+            #   tags: "8.0-azurelinux3.0",
+            # },
             # { ver: 8.0-preview, arch: jammy-chiseled, matching: "8.0.0-preview" },
             {
-              ver: 9.0-preview,
+              ver: "9.0",
               arch: alpine3.20,
-              matching: "9.0.0-preview",
-              tags: "9.0-alpine,9.0-preview-alpine,9.0-preview,9.0-alpine3.20,9.0",
+              matching: "9.0",
+              tags: "9.0-alpine,9.0-alpine3.20,9.0",
             },
             {
-              ver: 9.0-preview,
+              ver: "9.0",
               arch: bookworm-slim,
-              matching: "9.0.0-preview",
-              tags: "9.0-preview-bookworm-slim,9.0-bookworm-slim",
+              matching: "9.0",
+              tags: "9.0-bookworm-slim",
             },
-            {
-              ver: 9.0-preview,
-              arch: noble,
-              matching: "9.0.0-preview",
-              tags: "9.0-preview-noble,9.0-noble",
-            },
+            { ver: "9.0", arch: noble, matching: "9.0", tags: "9.0-noble" },
+            # {
+            #   ver: "9.0",
+            #   arch: azurelinux3.0,
+            #   matching: "9.0",
+            #   tags: "9.0-azurelinux3.0",
+            # },
+            # {
+            #   ver: 10.0-preview,
+            #   arch: alpine3.20,
+            #   matching: "10.0.0-preview",
+            #   tags: "10.0-alpine,10.0-preview-alpine,10.0-preview,10.0-alpine3.20,10.0",
+            # },
+            # {
+            #   ver: 10.0-preview,
+            #   arch: bookworm-slim,
+            #   matching: "10.0.0-preview",
+            #   tags: "10.0-preview-bookworm-slim,10.0-bookworm-slim",
+            # },
+            # {
+            #   ver: 10.0-preview,
+            #   arch: noble,
+            #   matching: "10.0.0-preview",
+            #   tags: "10.0-preview-noble,10.0-noble",
+            # },
           ]
     name: ${{ matrix.image.ver }}-${{ matrix.image.arch }}
     runs-on: ubuntu-latest
