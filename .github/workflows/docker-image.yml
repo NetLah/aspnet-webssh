@@ -45,12 +45,12 @@ jobs:
             },
             { ver: "8.0", arch: jammy, matching: "8.0", tags: "8.0-jammy" },
             { ver: "8.0", arch: noble, matching: "8.0", tags: "8.0-noble" },
-            {
-              ver: "8.0",
-              arch: azurelinux3.0,
-              matching: "8.0",
-              tags: "8.0-azurelinux3.0",
-            },
+            # {
+            #   ver: "8.0",
+            #   arch: azurelinux3.0,
+            #   matching: "8.0",
+            #   tags: "8.0-azurelinux3.0",
+            # },
             # { ver: 8.0-preview, arch: jammy-chiseled, matching: "8.0.0-preview" },
             {
               ver: "9.0",
@@ -65,12 +65,12 @@ jobs:
               tags: "9.0-bookworm-slim",
             },
             { ver: "9.0", arch: noble, matching: "9.0", tags: "9.0-noble" },
-            {
-              ver: "9.0",
-              arch: azurelinux3.0,
-              matching: "9.0",
-              tags: "9.0-azurelinux3.0",
-            },
+            # {
+            #   ver: "9.0",
+            #   arch: azurelinux3.0,
+            #   matching: "9.0",
+            #   tags: "9.0-azurelinux3.0",
+            # },
             # {
             #   ver: 10.0-preview,
             #   arch: alpine3.20,
