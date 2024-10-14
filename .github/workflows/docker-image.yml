@@ -11,13 +11,6 @@ jobs:
       fail-fast: false
       matrix:
         image: [
-            # { ver: "6.0", arch: alpine3.17, matching: "6.0" },
-            {
-              ver: "6.0",
-              arch: alpine3.19,
-              matching: "6.0",
-              tags: "6.0-alpine3.19",
-            },
             {
               ver: "6.0",
               arch: alpine3.20,
@@ -38,12 +31,6 @@ jobs:
             },
             { ver: "6.0", arch: focal, matching: "6.0", tags: "6.0-focal" },
             { ver: "6.0", arch: jammy, matching: "6.0", tags: "6.0-jammy" },
-            {
-              ver: "8.0",
-              arch: alpine3.19,
-              matching: "8.0",
-              tags: "8.0-alpine3.19",
-            },
             {
               ver: "8.0",
               arch: alpine3.20,
