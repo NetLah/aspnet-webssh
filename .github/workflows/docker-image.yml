@@ -192,10 +192,15 @@ jobs:
 
       - name: Enabling Docker Daemon With experimental features
         if: ${{ success() && env.SKIP_DOCKER != 'true' && github.event_name != 'pull_request' }}
+        shell: pwsh
         run: |
-          echo 'Before update daemon.json'
-          sudo cat /etc/docker/daemon.json
-          sudo bash -c 'echo "{ "\""exec-opts"\"": ["\""native.cgroupdriver=cgroupfs"\""], "\""cgroup-parent"\"": "\""/actions_job"\"", "\""experimental"\"": true }" > /etc/docker/daemon.json'
+          if(Test-Path /etc/docker/daemon.json -PathType Leaf -ErrorAction SilentlyContinue) {
+            echo 'Before update daemon.json'
+            sudo cat /etc/docker/daemon.json
+            sudo bash -c 'echo "{ "\""exec-opts"\"": ["\""native.cgroupdriver=cgroupfs"\""], "\""cgroup-parent"\"": "\""/actions_job"\"", "\""experimental"\"": true }" > /etc/docker/daemon.json'
+          } else {
+            sudo bash -c 'echo "{ "\""experimental"\"": true }" > /etc/docker/daemon.json'
+          }
           echo 'After update daemon.json'
           sudo cat /etc/docker/daemon.json
           sudo systemctl restart docker.service
