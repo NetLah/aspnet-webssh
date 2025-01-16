@@ -10,12 +10,6 @@ param (
 )
 
 $mappingVersionArch = @{
-    '^6\.0(\.\d+)?-alpine(.*)$'                  = '6.0-alpine', '6.0'
-    '^6\.0(\.\d+)?-bullseye-slim$'               = '6.0-bullseye-slim', '6.0', 'bullseye-slim'
-    '^6\.0(\.\d+)?-bookworm-slim$'               = '6.0-bookworm-slim', '6.0', 'bookworm-slim'
-    '^6\.0(\.\d+)?-focal$'                       = '6.0-focal', '6.0', 'focal'
-    '^6\.0(\.\d+)?-jammy$'                       = '6.0-jammy', '6.0', 'jammy'
-
     '^8\.0\.0-preview[^-]+-alpine(.*)$'          = '8.0-preview-alpine', '8.0-alpine', '8.0'
     '^8\.0\.0-preview[^-]+-bookworm-slim$'       = '8.0-preview-bookworm-slim', '8.0-preview', '8.0', 'preview-bookworm-slim', 'bookworm-slim'
     '^8\.0\.0-preview[^-]+-jammy$'               = '8.0-preview-jammy', '8.0-preview', '8.0', 'jammy'
@@ -54,11 +48,6 @@ $mappingVersionArch = @{
 
 # sdkMajor mappings arch
 $mappingArch = @{
-    '6.0-alpine'                 = 'alpine'
-    '6.0-bullseye-slim'          = 'debian'
-    '6.0-bookworm-slim'          = 'debian'
-    '6.0-focal'                  = 'debian'  #ubuntu 20.04 LTS
-    '6.0-jammy'                  = 'debian'  #ubuntu 22.04 LTS
     '8.0-preview-alpine'         = 'alpine'
     '8.0-preview-bookworm-slim'  = 'debian'
     '8.0-preview-jammy'          = 'debian'  #ubuntu 22.04 LTS
