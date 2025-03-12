@@ -1,4 +1,4 @@
-ARG IMAGE_TAG=6.0-bullseye-slim
+ARG IMAGE_TAG=8.0-bookworm-slim
 FROM mcr.microsoft.com/dotnet/aspnet:${IMAGE_TAG} AS base
 
 ENV SSH_PORT=2222 \

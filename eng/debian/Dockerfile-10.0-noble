@@ -1,4 +1,4 @@
-ARG IMAGE_TAG=8.0-bookworm-slim
+ARG IMAGE_TAG=10.0-noble
 FROM mcr.microsoft.com/dotnet/aspnet:${IMAGE_TAG} AS base
 
 ENV SSH_PORT=2222 \
@@ -17,12 +17,4 @@ RUN apt-get update \
     && echo "root:Docker!" | chpasswd \
     && chmod -R +x /opt/startup \
     && (sleep 1;/opt/startup/ssh_setup.sh 2>&1 > /dev/null) \
-    && rm -rf /tmp/* \
-    && addgroup \
-    --gid=$APPUSER_UID \
-    appuser \
-    && adduser \
-    --uid=$APPUSER_UID \
-    --ingroup=appuser \
-    --disabled-password \
-    appuser
+    && rm -rf /tmp/*
