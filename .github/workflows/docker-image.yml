@@ -69,12 +69,14 @@ jobs:
               matching: "10.0.0-preview",
               tags: "10.0-alpine,10.0-preview-alpine3.22,10.0-preview-alpine,10.0-preview,10.0",
             },
-            {
-              ver: 10.0-preview,
-              arch: trixie-slim,
-              matching: "10.0.0-preview",
-              tags: "10.0-preview-trixie-slim,10.0-trixie-slim",
-            },
+            # Remove Debian Trixie images
+            # https://github.com/dotnet/dotnet-docker/pull/6541
+            # {
+            #   ver: 10.0-preview,
+            #   arch: trixie-slim,
+            #   matching: "10.0.0-preview",
+            #   tags: "10.0-preview-trixie-slim,10.0-trixie-slim",
+            # },
             {
               ver: 10.0-preview,
               arch: noble,
