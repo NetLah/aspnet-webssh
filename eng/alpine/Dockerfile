@@ -6,8 +6,7 @@ ENV SSH_PORT=2222 \
     TZ=UTC \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
-    APPUSER_UID=1000 \
-    APP_UID=1654
+    APPUSER_UID=1000
 
 # Copy files in structure /etc/ssh/sshd_config, /opt/startup/init_container.sh /tmp/ssh_setup.sh
 COPY src/ /
@@ -28,12 +27,4 @@ RUN apk add --no-cache openssh tzdata icu-data-full icu-libs \
     --uid=$APPUSER_UID \
     --ingroup=appuser \
     --disabled-password \
-    appuser \
-    && addgroup \
-    --gid=$APP_UID \
-    app \
-    && adduser \
-    --uid=$APP_UID \
-    --ingroup=app \
-    --disabled-password \
-    app
+    appuser

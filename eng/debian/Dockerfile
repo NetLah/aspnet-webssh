@@ -1,10 +1,9 @@
-ARG IMAGE_TAG=6.0-bullseye-slim
+ARG IMAGE_TAG=10.0-noble
 FROM mcr.microsoft.com/dotnet/aspnet:${IMAGE_TAG} AS base
 
 ENV SSH_PORT=2222 \
     TZ=UTC \
-    APPUSER_UID=1000 \
-    APP_UID=1654
+    APPUSER_UID=1000
 
 # Copy files in structure /etc/ssh/sshd_config, /opt/startup/init_container.sh /tmp/ssh_setup.sh
 COPY src/ /
@@ -18,20 +17,4 @@ RUN apt-get update \
     && echo "root:Docker!" | chpasswd \
     && chmod -R +x /opt/startup \
     && (sleep 1;/opt/startup/ssh_setup.sh 2>&1 > /dev/null) \
-    && rm -rf /tmp/* \
-    && addgroup \
-    --gid=$APPUSER_UID \
-    appuser \
-    && adduser \
-    --uid=$APPUSER_UID \
-    --ingroup=appuser \
-    --disabled-password \
-    appuser \
-    && addgroup \
-    --gid=$APP_UID \
-    app \
-    && adduser \
-    --uid=$APP_UID \
-    --ingroup=app \
-    --disabled-password \
-    app
+    && rm -rf /tmp/*

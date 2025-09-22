@@ -1,19 +1,18 @@
-ARG IMAGE_TAG=6.0-alpine
+ARG IMAGE_TAG=6.0-bullseye-slim
 FROM mcr.microsoft.com/dotnet/aspnet:${IMAGE_TAG} AS base
 
-# Sample dotnet Alpine with ICU https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.alpine-x64#L20
 ENV SSH_PORT=2222 \
     TZ=UTC \
-    LC_ALL=en_US.UTF-8 \
-    LANG=en_US.UTF-8 \
-    APPUSER_UID=1000
+    APPUSER_UID=1000 \
+    APP_UID=1654
 
 # Copy files in structure /etc/ssh/sshd_config, /opt/startup/init_container.sh /tmp/ssh_setup.sh
 COPY src/ /
 
 # Install OpenSSH and set the password for root to "Docker!". In this example, "apk add" is the install instruction for an Alpine Linux-based image.
-# .NET Core 2.0 Globalization Invariant Mode https://github.com/dotnet/announcements/issues/20
-RUN apk add --no-cache openssh tzdata icu-data-full icu-libs \
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends openssh-server tzdata \
+    && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /run/sshd \
     && chmod -R 755 /run/sshd \
     && echo "root:Docker!" | chpasswd \
@@ -27,4 +26,12 @@ RUN apk add --no-cache openssh tzdata icu-data-full icu-libs \
     --uid=$APPUSER_UID \
     --ingroup=appuser \
     --disabled-password \
-    appuser
+    appuser \
+    && addgroup \
+    --gid=$APP_UID \
+    app \
+    && adduser \
+    --uid=$APP_UID \
+    --ingroup=app \
+    --disabled-password \
+    app
