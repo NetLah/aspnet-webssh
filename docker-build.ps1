@@ -91,17 +91,15 @@ $mappingArch = @{
     '9.0-noble'                   = 'debian'  #ubuntu 24.04 LTS
     '9.0-noble-chiseled'          = 'debian'  #ubuntu 24.04 LTS
     '10.0-preview-alpine'         = 'alpine'
-    '10.0-preview-trixie-slim'    = 'debian'
+    '10.0-preview-trixie-slim'    = 'debian' # NOTUSE
     '10.0-preview-noble'          = 'debian'  #ubuntu 22.04 LTS
-    '10.0-preview-noble-chiseled' = 'debian'  #ubuntu 22.04 LTS
+    '10.0-preview-noble-chiseled' = 'debian' # NOTUSE #ubuntu 22.04 LTS
     '10.0-rc-alpine'              = 'alpine'
-    '10.0-rc-trixie-slim'         = 'debian'
+    '10.0-rc-trixie-slim'         = 'debian' # NOTUSE
     '10.0-rc-noble'               = 'debian'  #ubuntu 22.04 LTS
-    '10.0-rc-noble-chiseled'      = 'debian'  #ubuntu 22.04 LTS
+    '10.0-rc-noble-chiseled'      = 'debian' # NOTUSE  #ubuntu 22.04 LTS
     '10.0-alpine'                 = 'alpine'
-    '10.0-trixie-slim'            = 'debian'
     '10.0-noble'                  = 'debian'  #ubuntu 24.04 LTS
-    '10.0-noble-chiseled'         = 'debian'  #ubuntu 24.04 LTS
 }
 
 function private:AddDockerImage($image) {
