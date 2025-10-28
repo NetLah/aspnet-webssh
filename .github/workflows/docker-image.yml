@@ -72,7 +72,7 @@ jobs:
             {
               ver: "10.0",
               arch: noble,
-              matching: "10.0.0-preview",
+              matching: "10.0.0-rc",
               tags: "10.0-rc-noble,10.0-noble",
             },
             # {
