@@ -13,15 +13,15 @@ jobs:
         image: [
             {
               ver: "8.0",
-              arch: alpine3.21,
+              arch: alpine3.22,
               matching: "8.0",
-              tags: "8.0-alpine3.21",
+              tags: "8.0-alpine3.22",
             },
             {
               ver: "8.0",
-              arch: alpine3.22,
+              arch: alpine3.23,
               matching: "8.0",
-              tags: "8.0-alpine,8.0-alpine3.22,8.0,latest",
+              tags: "8.0-alpine,8.0-alpine3.23,8.0",
             },
             {
               ver: "8.0",
@@ -40,15 +40,15 @@ jobs:
             # { ver: 8.0-preview, arch: jammy-chiseled, matching: "8.0.0-preview" },
             {
               ver: "9.0",
-              arch: alpine3.21,
+              arch: alpine3.22,
               matching: "9.0",
-              tags: "alpine3.21",
+              tags: "9.0-alpine3.22",
             },
             {
               ver: "9.0",
-              arch: alpine3.22,
+              arch: alpine3.23,
               matching: "9.0",
-              tags: "9.0-alpine,alpine3.22,9.0",
+              tags: "9.0-alpine3.23,9.0-alpine,9.0",
             },
             {
               ver: "9.0",
@@ -66,14 +66,20 @@ jobs:
             {
               ver: "10.0",
               arch: alpine3.22,
+              matching: "10.0",
+              tags: "alpine3.22,10.0-alpine3.22",
+            },
+            {
+              ver: "10.0",
+              arch: alpine3.23,
               matching: "10.0.0",
-              tags: "10.0-alpine,10.0-alpine3.22,10.0-alpine,10.0,10.0",
+              tags: "alpine3.23,10.0-alpine3.23,10.0-alpine,10.0,latest",
             },
             {
               ver: "10.0",
               arch: noble,
               matching: "10.0.0",
-              tags: "10.0-noble,10.0-noble",
+              tags: "noble,ubuntu,10.0-noble",
             },
             # {
             #   ver: "11.0-preview",
