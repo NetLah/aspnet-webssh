@@ -10,96 +10,124 @@ param (
 )
 
 $mappingVersionArch = @{
-    '^8\.0\.0-preview[^-]+-alpine(.*)$'           = '8.0-preview-alpine', '8.0-alpine', '8.0'
-    '^8\.0\.0-preview[^-]+-bookworm-slim$'        = '8.0-preview-bookworm-slim', '8.0-preview', '8.0', 'preview-bookworm-slim', 'bookworm-slim'
-    '^8\.0\.0-preview[^-]+-jammy$'                = '8.0-preview-jammy', '8.0-preview', '8.0', 'jammy'
-    '^8\.0\.0-preview[^-]+-jammy-chiseled$'       = '8.0-preview-jammy-chiseled', '8.0-jammy-chiseled', 'jammy-chiseled'
+    '^8\.0\.0-preview[^-]+-alpine(.*)$'              = '8.0-preview-alpine', '8.0-alpine', '8.0'
+    '^8\.0\.0-preview[^-]+-bookworm-slim$'           = '8.0-preview-bookworm-slim', '8.0-preview', '8.0', 'preview-bookworm-slim', 'bookworm-slim'
+    '^8\.0\.0-preview[^-]+-jammy$'                   = '8.0-preview-jammy', '8.0-preview', '8.0', 'jammy'
+    '^8\.0\.0-preview[^-]+-jammy-chiseled$'          = '8.0-preview-jammy-chiseled', '8.0-jammy-chiseled', 'jammy-chiseled'
     
-    '^8\.0\.0-rc[^-]+-alpine(.*)$'                = '8.0-rc-alpine', '8.0-alpine', '8.0'
-    '^8\.0\.0-rc[^-]+-bookworm-slim$'             = '8.0-rc-bookworm-slim', '8.0-rc', '8.0-bookworm-slim', '8.0', 'bookworm-slim'
-    '^8\.0\.0-rc[^-]+-jammy$'                     = '8.0-rc-jammy', '8.0-rc', '8.0-jammy', '8.0', 'jammy'
-    '^8\.0\.0-rc[^-]+-jammy-chiseled$'            = '8.0-rc-jammy-chiseled', '8.0-jammy-chiseled', 'jammy-chiseled'
+    '^8\.0\.0-rc[^-]+-alpine(.*)$'                   = '8.0-rc-alpine', '8.0-alpine', '8.0'
+    '^8\.0\.0-rc[^-]+-bookworm-slim$'                = '8.0-rc-bookworm-slim', '8.0-rc', '8.0-bookworm-slim', '8.0', 'bookworm-slim'
+    '^8\.0\.0-rc[^-]+-jammy$'                        = '8.0-rc-jammy', '8.0-rc', '8.0-jammy', '8.0', 'jammy'
+    '^8\.0\.0-rc[^-]+-jammy-chiseled$'               = '8.0-rc-jammy-chiseled', '8.0-jammy-chiseled', 'jammy-chiseled'
     
-    '^8\.0(\.\d+)?-alpine(.*)$'                   = '8.0-alpine', '8.0'
-    '^8\.0(\.\d+)?-bookworm-slim$'                = '8.0-bookworm-slim', '8.0', 'bookworm-slim'
-    '^8\.0(\.\d+)?-jammy$'                        = '8.0-jammy', '8.0', 'jammy'
-    '^8\.0(\.\d+)?-jammy-chiseled$'               = '8.0-jammy-chiseled', 'jammy-chiseled'
-    '^8\.0(\.\d+)?-noble$'                        = '8.0-noble', '8.0', 'noble'
-    '^8\.0(\.\d+)?-noble-chiseled$'               = '8.0-noble-chiseled', 'noble-chiseled'
-    '^8\.0(\.\d+)?-azurelinux3.0$'                = '8.0-azurelinux3.0', '8.0', 'azurelinux3.0'
+    '^8\.0(\.\d+)?-alpine(.*)$'                      = '8.0-alpine', '8.0'
+    '^8\.0(\.\d+)?-bookworm-slim$'                   = '8.0-bookworm-slim', '8.0', 'bookworm-slim'
+    '^8\.0(\.\d+)?-jammy$'                           = '8.0-jammy', '8.0', 'jammy'
+    '^8\.0(\.\d+)?-jammy-chiseled$'                  = '8.0-jammy-chiseled', 'jammy-chiseled'
+    '^8\.0(\.\d+)?-noble$'                           = '8.0-noble', '8.0', 'noble'
+    '^8\.0(\.\d+)?-noble-chiseled$'                  = '8.0-noble-chiseled', 'noble-chiseled'
+    '^8\.0(\.\d+)?-azurelinux3.0$'                   = '8.0-azurelinux3.0', '8.0', 'azurelinux3.0'
     
-    '^9\.0(\.\d+)?-preview[^-]*-alpine(.*)$'      = '9.0-preview-alpine', '9.0-alpine', '9.0'
-    '^9\.0(\.\d+)?-preview[^-]*-bookworm-slim$'   = '9.0-preview-bookworm-slim', '9.0-preview', '9.0', 'preview-bookworm-slim', 'bookworm-slim'
-    '^9\.0(\.\d+)?-preview[^-]*-noble$'           = '9.0-preview-noble', '9.0-noble', '9.0-preview', '9.0', 'noble'
-    '^9\.0(\.\d+)?-preview[^-]*-noble-chiseled$'  = '9.0-preview-noble-chiseled', '9.0-noble-chiseled', '9.0-preview', 'noble-chiseled'
+    '^9\.0(\.\d+)?-preview[^-]*-alpine(.*)$'         = '9.0-preview-alpine', '9.0-alpine', '9.0'
+    '^9\.0(\.\d+)?-preview[^-]*-bookworm-slim$'      = '9.0-preview-bookworm-slim', '9.0-preview', '9.0', 'preview-bookworm-slim', 'bookworm-slim'
+    '^9\.0(\.\d+)?-preview[^-]*-noble$'              = '9.0-preview-noble', '9.0-noble', '9.0-preview', '9.0', 'noble'
+    '^9\.0(\.\d+)?-preview[^-]*-noble-chiseled$'     = '9.0-preview-noble-chiseled', '9.0-noble-chiseled', '9.0-preview', 'noble-chiseled'
     
-    '^9\.0(\.\d+)?-rc[^-]*-alpine(.*)$'           = '9.0-rc-alpine', '9.0-alpine', '9.0'
-    '^9\.0(\.\d+)?-rc[^-]*-bookworm-slim$'        = '9.0-rc-bookworm-slim', '9.0-bookworm-slim', '9.0-rc', '9.0', 'bookworm-slim'
-    '^9\.0(\.\d+)?-rc[^-]*-noble$'                = '9.0-rc-noble', '9.0-noble', '9.0-rc', '9.0', 'noble'
-    '^9\.0(\.\d+)?-rc[^-]*-noble-chiseled$'       = '9.0-rc-noble-chiseled', '9.0-noble-chiseled', 'noble-chiseled'
+    '^9\.0(\.\d+)?-rc[^-]*-alpine(.*)$'              = '9.0-rc-alpine', '9.0-alpine', '9.0'
+    '^9\.0(\.\d+)?-rc[^-]*-bookworm-slim$'           = '9.0-rc-bookworm-slim', '9.0-bookworm-slim', '9.0-rc', '9.0', 'bookworm-slim'
+    '^9\.0(\.\d+)?-rc[^-]*-noble$'                   = '9.0-rc-noble', '9.0-noble', '9.0-rc', '9.0', 'noble'
+    '^9\.0(\.\d+)?-rc[^-]*-noble-chiseled$'          = '9.0-rc-noble-chiseled', '9.0-noble-chiseled', 'noble-chiseled'
     
-    '^9\.0(\.\d+)?-alpine(.*)$'                   = '9.0-alpine', '9.0'
-    '^9\.0(\.\d+)?-bookworm-slim$'                = '9.0-bookworm-slim', '9.0', 'bookworm-slim'
-    '^9\.0(\.\d+)?-noble$'                        = '9.0-noble', '9.0', 'noble'
-    '^9\.0(\.\d+)?-noble-chiseled$'               = '9.0-noble-chiseled', 'noble-chiseled'
-    '^9\.0(\.\d+)?-azurelinux3.0$'                = '9.0-azurelinux3.0', '9.0', 'noble'
+    '^9\.0(\.\d+)?-alpine(.*)$'                      = '9.0-alpine', '9.0'
+    '^9\.0(\.\d+)?-bookworm-slim$'                   = '9.0-bookworm-slim', '9.0', 'bookworm-slim'
+    '^9\.0(\.\d+)?-noble$'                           = '9.0-noble', '9.0', 'noble'
+    '^9\.0(\.\d+)?-noble-chiseled$'                  = '9.0-noble-chiseled', 'noble-chiseled'
+    '^9\.0(\.\d+)?-azurelinux3.0$'                   = '9.0-azurelinux3.0', '9.0', 'noble'
 
-    '^10\.0(\.\d+)?-preview[^-]*-alpine(.*)$'     = '10.0-preview-alpine', '10.0-alpine', '10.0'
-    '^10\.0(\.\d+)?-preview[^-]*-trixie-slim$'    = '10.0-preview-trixie-slim', '10.0-preview', '10.0', 'preview-trixie-slim', 'trixie-slim'
-    '^10\.0(\.\d+)?-preview[^-]*-noble$'          = '10.0-preview-noble', '10.0-noble', '10.0-preview', '10.0', 'noble'
-    '^10\.0(\.\d+)?-preview[^-]*-noble-chiseled$' = '10.0-preview-noble-chiseled', '10.0-noble-chiseled', '10.0-preview', 'noble-chiseled'
+    '^10\.0(\.\d+)?-preview[^-]*-alpine(.*)$'        = '10.0-preview-alpine', '10.0-alpine', '10.0'
+    '^10\.0(\.\d+)?-preview[^-]*-trixie-slim$'       = '10.0-preview-trixie-slim', '10.0-preview', '10.0', 'preview-trixie-slim', 'trixie-slim'
+    '^10\.0(\.\d+)?-preview[^-]*-noble$'             = '10.0-preview-noble', '10.0-noble', '10.0-preview', '10.0', 'noble'
+    '^10\.0(\.\d+)?-preview[^-]*-noble-chiseled$'    = '10.0-preview-noble-chiseled', '10.0-noble-chiseled', '10.0-preview', 'noble-chiseled'
     
-    '^10\.0(\.\d+)?-rc[^-]*-alpine(.*)$'          = '10.0-rc-alpine', '10.0-alpine', '10.0'
-    '^10\.0(\.\d+)?-rc[^-]*-trixie-slim$'         = '10.0-rc-trixie-slim', '10.0-trixie-slim', '10.0-rc', '10.0', 'trixie-slim'
-    '^10\.0(\.\d+)?-rc[^-]*-noble$'               = '10.0-rc-noble', '10.0-noble', '10.0-rc', '10.0', 'noble'
-    '^10\.0(\.\d+)?-rc[^-]*-noble-chiseled$'      = '10.0-rc-noble-chiseled', '10.0-noble-chiseled', 'noble-chiseled'
+    '^10\.0(\.\d+)?-rc[^-]*-alpine(.*)$'             = '10.0-rc-alpine', '10.0-alpine', '10.0'
+    '^10\.0(\.\d+)?-rc[^-]*-trixie-slim$'            = '10.0-rc-trixie-slim', '10.0-trixie-slim', '10.0-rc', '10.0', 'trixie-slim'
+    '^10\.0(\.\d+)?-rc[^-]*-noble$'                  = '10.0-rc-noble', '10.0-noble', '10.0-rc', '10.0', 'noble'
+    '^10\.0(\.\d+)?-rc[^-]*-noble-chiseled$'         = '10.0-rc-noble-chiseled', '10.0-noble-chiseled', 'noble-chiseled'
     
-    '^10\.0(\.\d+)?-alpine(.*)$'                  = '10.0-alpine', '10.0'
-    '^10\.0(\.\d+)?-trixie-slim$'                 = '10.0-trixie-slim', '10.0', 'trixie-slim'
-    '^10\.0(\.\d+)?-noble$'                       = '10.0-noble', '10.0', 'noble'
-    '^10\.0(\.\d+)?-noble-chiseled$'              = '10.0-noble-chiseled', 'noble-chiseled'
-    '^10\.0(\.\d+)?-azurelinux3.0$'               = '10.0-azurelinux3.0', '10.0', 'noble'
+    '^10\.0(\.\d+)?-alpine(.*)$'                     = '10.0-alpine', '10.0'
+    '^10\.0(\.\d+)?-trixie-slim$'                    = '10.0-trixie-slim', '10.0', 'trixie-slim'
+    '^10\.0(\.\d+)?-noble$'                          = '10.0-noble', '10.0', 'noble'
+    '^10\.0(\.\d+)?-noble-chiseled$'                 = '10.0-noble-chiseled', 'noble-chiseled'
+    '^10\.0(\.\d+)?-azurelinux3.0$'                  = '10.0-azurelinux3.0', '10.0', 'noble'
+
+    '^11\.0(\.\d+)?-preview[^-]*-alpine(.*)$'        = '11.0-preview-alpine', '11.0-alpine', '11.0'
+    '^11\.0(\.\d+)?-preview[^-]*-trixie-slim$'       = '11.0-preview-trixie-slim', '11.0-preview', '11.0', 'preview-trixie-slim', 'trixie-slim'
+    '^11\.0(\.\d+)?-preview[^-]*-resolute$'          = '11.0-preview-resolute', '11.0-resolute', '11.0-preview', '11.0', 'resolute'
+    '^11\.0(\.\d+)?-preview[^-]*-resolute-chiseled$' = '11.0-preview-resolute-chiseled', '11.0-resolute-chiseled', '11.0-preview', 'resolute-chiseled'
+    
+    '^11\.0(\.\d+)?-rc[^-]*-alpine(.*)$'             = '11.0-rc-alpine', '11.0-alpine', '11.0'
+    '^11\.0(\.\d+)?-rc[^-]*-trixie-slim$'            = '11.0-rc-trixie-slim', '11.0-trixie-slim', '11.0-rc', '11.0', 'trixie-slim'
+    '^11\.0(\.\d+)?-rc[^-]*-resolute$'               = '11.0-rc-resolute', '11.0-resolute', '11.0-rc', '11.0', 'resolute'
+    '^11\.0(\.\d+)?-rc[^-]*-resolute-chiseled$'      = '11.0-rc-resolute-chiseled', '11.0-resolute-chiseled', 'resolute-chiseled'
+    
+    '^11\.0(\.\d+)?-alpine(.*)$'                     = '11.0-alpine', '11.0'
+    '^11\.0(\.\d+)?-trixie-slim$'                    = '11.0-trixie-slim', '11.0', 'trixie-slim'
+    '^11\.0(\.\d+)?-resolute$'                       = '11.0-resolute', '11.0', 'resolute'
+    '^11\.0(\.\d+)?-resolute-chiseled$'              = '11.0-resolute-chiseled', 'resolute-chiseled'
+    '^11\.0(\.\d+)?-azurelinux3.0$'                  = '11.0-azurelinux3.0', '11.0', 'resolute'
 }
 
 # sdkMajor mappings arch
 $mappingArch = @{
-    '8.0-preview-alpine'          = 'alpine'
-    '8.0-preview-bookworm-slim'   = 'debian'
-    '8.0-preview-jammy'           = 'debian'  #ubuntu 22.04 LTS
-    '8.0-preview-jammy-chiseled'  = 'debian'  #ubuntu 22.04 LTS
-    '8.0-rc-alpine'               = 'alpine'
-    '8.0-rc-bookworm-slim'        = 'debian'
-    '8.0-rc-jammy'                = 'debian'  #ubuntu 22.04 LTS
-    '8.0-rc-jammy-chiseled'       = 'debian'  #ubuntu 22.04 LTS
-    '8.0-alpine'                  = 'alpine'
-    '8.0-bookworm-slim'           = 'debian'
-    '8.0-jammy'                   = 'debian'  #ubuntu 22.04 LTS
-    '8.0-jammy-chiseled'          = 'debian'  #ubuntu 22.04 LTS
-    '8.0-noble'                   = 'debian'  #ubuntu 24.04 LTS
-    '8.0-noble-chiseled'          = 'debian'  #ubuntu 24.04 LTS
-    '8.0-noble-chiseled-extra'    = 'debian'  #ubuntu 24.04 LTS
-    '9.0-preview-alpine'          = 'alpine'
-    '9.0-preview-bookworm-slim'   = 'debian'
-    '9.0-preview-noble'           = 'debian'  #ubuntu 22.04 LTS
-    '9.0-preview-noble-chiseled'  = 'debian'  #ubuntu 22.04 LTS
-    '9.0-rc-alpine'               = 'alpine'
-    '9.0-rc-bookworm-slim'        = 'debian'
-    '9.0-rc-noble'                = 'debian'  #ubuntu 22.04 LTS
-    '9.0-rc-noble-chiseled'       = 'debian'  #ubuntu 22.04 LTS
-    '9.0-alpine'                  = 'alpine'
-    '9.0-bookworm-slim'           = 'debian'
-    '9.0-noble'                   = 'debian'  #ubuntu 24.04 LTS
-    '9.0-noble-chiseled'          = 'debian'  #ubuntu 24.04 LTS
-    '10.0-preview-alpine'         = 'alpine'
-    '10.0-preview-trixie-slim'    = 'debian' # NOTUSE
-    '10.0-preview-noble'          = 'debian'  #ubuntu 22.04 LTS
-    '10.0-preview-noble-chiseled' = 'debian' # NOTUSE #ubuntu 22.04 LTS
-    '10.0-rc-alpine'              = 'alpine'
-    '10.0-rc-trixie-slim'         = 'debian' # NOTUSE
-    '10.0-rc-noble'               = 'debian'  #ubuntu 22.04 LTS
-    '10.0-rc-noble-chiseled'      = 'debian' # NOTUSE  #ubuntu 22.04 LTS
-    '10.0-alpine'                 = 'alpine'
-    '10.0-noble'                  = 'debian'  #ubuntu 24.04 LTS
+    '8.0-preview-alpine'             = 'alpine'
+    '8.0-preview-bookworm-slim'      = 'debian'
+    '8.0-preview-jammy'              = 'debian'  #ubuntu 22.04 LTS
+    '8.0-preview-jammy-chiseled'     = 'debian'  #ubuntu 22.04 LTS
+    '8.0-rc-alpine'                  = 'alpine'
+    '8.0-rc-bookworm-slim'           = 'debian'
+    '8.0-rc-jammy'                   = 'debian'  #ubuntu 22.04 LTS
+    '8.0-rc-jammy-chiseled'          = 'debian'  #ubuntu 22.04 LTS
+    '8.0-alpine'                     = 'alpine'
+    '8.0-bookworm-slim'              = 'debian'
+    '8.0-jammy'                      = 'debian'  #ubuntu 22.04 LTS
+    '8.0-jammy-chiseled'             = 'debian'  #ubuntu 22.04 LTS
+    '8.0-noble'                      = 'debian'  #ubuntu 24.04 LTS
+    '8.0-noble-chiseled'             = 'debian'  #ubuntu 24.04 LTS
+    '8.0-noble-chiseled-extra'       = 'debian'  #ubuntu 24.04 LTS
+    '9.0-preview-alpine'             = 'alpine'
+    '9.0-preview-bookworm-slim'      = 'debian'
+    '9.0-preview-noble'              = 'debian'  #ubuntu 24.04 LTS
+    '9.0-preview-noble-chiseled'     = 'debian'  #ubuntu 24.04 LTS
+    '9.0-rc-alpine'                  = 'alpine'
+    '9.0-rc-bookworm-slim'           = 'debian'
+    '9.0-rc-noble'                   = 'debian'  #ubuntu 24.04 LTS
+    '9.0-rc-noble-chiseled'          = 'debian'  #ubuntu 24.04 LTS
+    '9.0-alpine'                     = 'alpine'
+    '9.0-bookworm-slim'              = 'debian'
+    '9.0-noble'                      = 'debian'  #ubuntu 24.04 LTS
+    '9.0-noble-chiseled'             = 'debian'  #ubuntu 24.04 LTS
+    '10.0-preview-alpine'            = 'alpine'
+    '10.0-preview-trixie-slim'       = 'debian'  # NOTUSE
+    '10.0-preview-noble'             = 'debian'  #ubuntu 24.04 LTS
+    '10.0-preview-noble-chiseled'    = 'debian'  # NOTUSE #ubuntu 22.04 LTS
+    '10.0-rc-alpine'                 = 'alpine'
+    '10.0-rc-trixie-slim'            = 'debian'  # NOTUSE
+    '10.0-rc-noble'                  = 'debian'  #ubuntu 24.04 LTS
+    '10.0-rc-noble-chiseled'         = 'debian'  # NOTUSE  #ubuntu 22.04 LTS
+    '10.0-alpine'                    = 'alpine'
+    '10.0-noble'                     = 'debian'  #ubuntu 24.04 LTS
+    '10.0-noble-chiseled'            = 'debian'  # NOTUSE #ubuntu 24.04 LTS
+    '11.0-preview-alpine'            = 'alpine'
+    '11.0-preview-trixie-slim'       = 'debian'  # NOTUSE
+    '11.0-preview-resolute'          = 'debian'  #ubuntu 26.04 LTS
+    '11.0-preview-resolute-chiseled' = 'debian'  # NOTUSE #ubuntu 26.04 LTS
+    '11.0-rc-alpine'                 = 'alpine'
+    '11.0-rc-trixie-slim'            = 'debian'  # NOTUSE
+    '11.0-rc-resolute'               = 'debian'  #ubuntu 26.04 LTS
+    '11.0-rc-resolute-chiseled'      = 'debian'  # NOTUSE  #ubuntu 26.04 LTS
+    '11.0-alpine'                    = 'alpine'
+    '11.0-resolute'                  = 'debian'  #ubuntu 26.04 LTS
+    '11.0-resolute-chiseled'         = 'debian'  #NOTUSE ubuntu 26.04 LTS
 }
 
 function private:AddDockerImage($image) {
