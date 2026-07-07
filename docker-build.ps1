@@ -59,6 +59,7 @@ $mappingVersionArch = @{
     '^10\.0(\.\d+)?-noble$'                          = '10.0-noble', '10.0', 'noble'
     '^10\.0(\.\d+)?-noble-chiseled$'                 = '10.0-noble-chiseled', 'noble-chiseled'
     '^10\.0(\.\d+)?-azurelinux3.0$'                  = '10.0-azurelinux3.0', '10.0', 'noble'
+    '^10\.0(\.\d+)?-resolute$'                       = '10.0-resolute', '10.0', 'resolute'
 
     '^11\.0(\.\d+)?-preview[^-]*-alpine(.*)$'        = '11.0-preview-alpine', '11.0-alpine', '11.0'
     '^11\.0(\.\d+)?-preview[^-]*-trixie-slim$'       = '11.0-preview-trixie-slim', '11.0-preview', '11.0', 'preview-trixie-slim', 'trixie-slim'
@@ -117,6 +118,7 @@ $mappingArch = @{
     '10.0-alpine'                    = 'alpine'
     '10.0-noble'                     = 'debian'  #ubuntu 24.04 LTS
     '10.0-noble-chiseled'            = 'debian'  # NOTUSE #ubuntu 24.04 LTS
+    '10.0-resolute'                  = 'debian'  #ubuntu 26.04 LTS
     '11.0-preview-alpine'            = 'alpine'
     '11.0-preview-trixie-slim'       = 'debian'  # NOTUSE
     '11.0-preview-resolute'          = 'debian'  #ubuntu 26.04 LTS
