@@ -39,6 +39,11 @@ if [ ! -z "${_STARTUP_COMMAND}" ]; then
     /usr/sbin/sshd
   fi
 
+  if [ -f /opt/startup/hosts_file ] && [ ! -e /opt/startup/hosts_file.touch ]; then
+    cat /opt/startup/hosts_file >> /etc/hosts
+    touch /opt/startup/hosts_file.touch
+  fi
+
   $_STARTUP_COMMAND
 else
   echo "Missing startup command. Please use command line arguments or environment variable \$STARTUPCOMMAND."
