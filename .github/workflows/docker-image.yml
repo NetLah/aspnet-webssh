@@ -13,16 +13,10 @@ jobs:
         image: [
             # {
             #   ver: "8.0",
-            #   arch: alpine3.22,
+            #   arch: alpine3.23,
             #   matching: "8.0",
-            #   tags: "8.0-alpine3.22",
+            #   tags: "8.0-alpine3.23",
             # },
-            {
-              ver: "8.0",
-              arch: alpine3.23,
-              matching: "8.0",
-              tags: "8.0-alpine3.23",
-            },
             {
               ver: "8.0",
               arch: alpine3.24,
@@ -46,16 +40,10 @@ jobs:
             # { ver: 8.0-preview, arch: jammy-chiseled, matching: "8.0.0-preview" },
             # {
             #   ver: "9.0",
-            #   arch: alpine3.22,
+            #   arch: alpine3.23,
             #   matching: "9.0",
-            #   tags: "9.0-alpine3.22",
+            #   tags: "9.0-alpine3.23",
             # },
-            {
-              ver: "9.0",
-              arch: alpine3.23,
-              matching: "9.0",
-              tags: "9.0-alpine3.23",
-            },
             {
               ver: "9.0",
               arch: alpine3.24,
@@ -77,16 +65,10 @@ jobs:
             # },
             # {
             #   ver: "10.0",
-            #   arch: alpine3.22,
-            #   matching: "10.0",
-            #   tags: "alpine3.22,10.0-alpine3.22",
+            #   arch: alpine3.23,
+            #   matching: "10.0.0",
+            #   tags: "10.0-alpine3.23,alpine3.23",
             # },
-            {
-              ver: "10.0",
-              arch: alpine3.23,
-              matching: "10.0.0",
-              tags: "10.0-alpine3.23,alpine3.23",
-            },
             {
               ver: "10.0",
               arch: alpine3.24,
@@ -106,29 +88,17 @@ jobs:
               tags: "10.0-resolute,resolute,ubuntu",
             },
             {
-              ver: "11.0-preview",
+              ver: "11.0",
               arch: alpine3.24,
-              matching: "11.0.0-preview",
-              tags: "11.0-preview-alpine3.24,11.0-preview-alpine,11.0-preview,11.0-alpine,11.0",
+              matching: "11.0.0-rc",
+              tags: "11.0-alpine,11.0-rc-alpine3.24,11.0-rc-alpine,11.0-rc,11.0",
             },
             {
-              ver: "11.0-preview",
+              ver: "11.0",
               arch: resolute,
-              matching: "11.0.0-preview",
-              tags: "11.0-preview-resolute,11.0-resolute",
+              matching: "11.0.0-rc",
+              tags: "11.0-rc-resolute,11.0-resolute",
             },
-            #{
-            #  ver: "11.0",
-            #  arch: alpine3.23,
-            #  matching: "11.0.0-rc",
-            #  tags: "11.0-alpine,11.0-rc-alpine3.23,11.0-rc-alpine,11.0-rc,10.0",
-            #},
-            #{
-            #  ver: "11.0",
-            #  arch: resolute,
-            #  matching: "11.0.0-rc",
-            #  tags: "11.0-rc-resolute,11.0-resolute",
-            #},
             #{
             #  ver: "12.0-preview",
             #  arch: alpine3.23,
