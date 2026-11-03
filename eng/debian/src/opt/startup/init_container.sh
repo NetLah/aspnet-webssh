@@ -40,8 +40,12 @@ if [ ! -z "${_STARTUP_COMMAND}" ]; then
   fi
 
   if [ -f /opt/startup/hosts_file ] && [ ! -e /opt/startup/hosts_file.touch ]; then
-    cat /opt/startup/hosts_file >> /etc/hosts
-    touch /opt/startup/hosts_file.touch
+    if [ "$(id -u)" -eq 0 ]; then
+      cat /opt/startup/hosts_file >> /etc/hosts
+      touch /opt/startup/hosts_file.touch
+    else
+      echo "File exist /opt/startup/hosts_file, but dont have permission to update /etc/hosts file."
+    fi
   fi
 
   $_STARTUP_COMMAND
