@@ -90,14 +90,14 @@ jobs:
             {
               ver: "11.0",
               arch: alpine3.24,
-              matching: "11.0.0-rc",
-              tags: "11.0-alpine,11.0-rc-alpine3.24,11.0-rc-alpine,11.0-rc,11.0",
+              matching: "11.0.0",
+              tags: "11.0-alpine,11.0-alpine3.24,11.0-alpine,11.0",
             },
             {
               ver: "11.0",
               arch: resolute,
-              matching: "11.0.0-rc",
-              tags: "11.0-rc-resolute,11.0-resolute",
+              matching: "11.0.0",
+              tags: "11.0-resolute",
             },
             #{
             #  ver: "12.0-preview",
